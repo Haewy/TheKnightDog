@@ -17,10 +17,17 @@ public class PlayerMove : MonoBehaviour
     public int damage = 10;
 
     Rigidbody rigid;
+    CapsuleCollider capsuleCollider;
 
+    ///
+
+    // To Carry a Weapon
+    public GameObject myCarryON;
+    //
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
     }
     // Start is called before the first frame update
     void Start()
@@ -35,7 +42,26 @@ public class PlayerMove : MonoBehaviour
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");
         OnMove();
+        // To carry the weapon around 
+        if (myCarryON != null && myCarryON.tag == "Weapon")
+        {
+            myCarryON.transform.parent = this.transform;
+        }
+        //
+        if (myCarryON != null && myCarryON.tag == "Potion")
+        {
+            //Potion potion = new Potion();
 
+            myCarryON.SetActive(false);
+        }
+    }
+    private void FixedUpdate()
+    {
+        FreezeRotation();
+    }
+    void FreezeRotation()
+    {
+        rigid.angularVelocity = Vector3.zero;
     }
     void OnMove()
     {
