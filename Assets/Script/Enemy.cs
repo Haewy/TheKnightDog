@@ -5,39 +5,46 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private enum EnemyType { Burrow,Log };
+    [SerializeField] private EnemyType enemyType;
     [SerializeField] private int hp;
+    [SerializeField] private int damage = 10;
     [SerializeField] private int xp = 50; // When the player kills an enemy the player gets xp
     [SerializeField] public Transform target;
     [SerializeField] private BoxCollider attackRage;
     private bool isChase;
     private bool isAttack;
-
+    
 
     Rigidbody rigid;
-    CapsuleCollider capsuleCollider;
     NavMeshAgent nav;
     Animator anim;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
         nav = GetComponent<NavMeshAgent>();       
         anim = GetComponent<Animator>();
 
         Invoke("OnChase", 2);
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
         hp = 100;
+        
     }
    
     // Update is called once per frame
     void Update()
     {
-        if(isChase)
-            nav.SetDestination(target.position);                       
+        if (nav.enabled)
+        {
+            nav.SetDestination(target.position);
+            nav.isStopped = !isChase;
+        }                              
     }
     private void FixedUpdate()
     {
@@ -46,30 +53,57 @@ public class Enemy : MonoBehaviour
     // When the player is in an attack range the enemy starts punching
     void OnTarget()
     {
-        float targetRadius = 1.0f;
-        float targetRange = 2.0f;
+        float targetRadius = 0;
+        float targetRange = 0;
+
+        switch (enemyType)
+        {
+            case EnemyType.Burrow:
+                targetRadius = 0.5f;
+                targetRange = 0.2f;
+                break;
+            case EnemyType.Log:                
+
+                targetRadius = 0.5f;
+                targetRange = 50.0f;
+                rigid.AddForce(Vector3.up,ForceMode.Impulse);
+                break;
+            default:
+                break;
+        }
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));
         
         // When the player is in the attack range
-        if (hits.Length > 0 && !isAttack)
+        if (hits.Length > 0 && !isAttack) //hits.Length > 0 
         {
             StartCoroutine(OnAttack());
         }
-        //OnChase(); ==> Not here
     }
     IEnumerator OnAttack()
     {
         isChase = false;
         isAttack = true;
-        anim.SetBool("isAttack", true);
+        anim.SetBool("isAttack", isAttack);
 
-        yield return null;
-        // OnChase(); ==> Not here
+        // Boxcollider attackRage ON
+        attackRage.enabled = true;
+
+        yield return new WaitForSeconds(0.3f);
+        // Boxcollider attackRange OFF
+        attackRage.enabled = false;
+        isChase = false;
+
+        yield return new WaitForSeconds(0.3f);
+        // End of Attacking then chasing again
+        isChase = true;
+        isAttack = false;
+        anim.SetBool("isAttack", false);       
 
     }
     void OnChase()
     {
         isChase = true;
+        isAttack = false;
         anim.SetBool("isWalk", true);
     }
     // Prevent the enemy from rotating
@@ -79,17 +113,17 @@ public class Enemy : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
     }
 
-    // Get attack from the player
+    // Get attack from the player (Damaging)
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "Player")  // Can switch with weapon
+        if (collision.collider. tag == "Player")  // Can switch with weapon
         {
-            anim.SetBool("isAttack", true);
-            // cache PlayerMove's script
-            PlayerMove player = collision.collider.GetComponent<PlayerMove>();
+            StartCoroutine(OnAttack());
 
+            // cache PlayerMove's script
+            CharacterStats player = collision.collider.GetComponent<CharacterStats>(); 
             // Get damage Enemy's hp by the player's attack power
-            hp -= player.damage;
+            hp -= damage;
 
             // When Enemy reaches 0 point of hp, Enemy destories
             if (hp <= 0)
@@ -100,8 +134,9 @@ public class Enemy : MonoBehaviour
                 anim.SetTrigger("doDie");
 
                 // Increase the player's xp
-                player.xp += xp;
-                Destroy(gameObject, 2);
+                player.curentXp += xp;
+                Destroy(gameObject, 2.0f); // ?? it does not work
+                
             }
             
         }

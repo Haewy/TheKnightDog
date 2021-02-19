@@ -4,18 +4,35 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
 {
+    // Player HP and CurentHP
+    [Header("Character Stats Settings")]
     [SerializeField]public float maxHP= 100.0f;
     [SerializeField]public float curentHp;
+    
+    // Player MP and CurentMP
     [SerializeField]public float maxMP = 100.0f;
-    [SerializeField] public float curentmp;
-    [SerializeField]public float maxXp = 100.0f;
-    [SerializeField]public float xp;
+    [SerializeField]public float curentmp;
+
+    // Player XP and CurentXP
+    [SerializeField] public int maxXP = 100;
+    [SerializeField] public int curentXp= 0;
+
+    //Player Level 
+    [SerializeField] public int curentlevel = 1;
+    [SerializeField] public int maxLvl=3;
+    
+    public bool isLvlUp = false;
+    public bool isLvlMax = false;
+
     public bool isDead { get; private set; }
     public bool isDamage { get; set; }
+
+    [SerializeField]public GameObject inputManager;
     private void Awake()
     {
         curentHp = maxHP;
         curentmp = maxMP;
+        
     }
     // Start is called before the first frame update
     void Start()
@@ -28,22 +45,23 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
     {
         // Test Method for Player take damage and death animation  
         DamageTake(curentHp,isDamage);
-        Death(curentHp,isDead);
-      
+        ManaTake();
 
-        if (Input.GetKeyDown("1"))
-        {
-            curentmp -= 10;
-           
-        }
+        //Check Player Level up 
+        CheckXP();
+        CheckLvl();
+        Death(curentHp,isDead);
+
+
        
+
 
     }
 
     public void DamageTake(float hp,bool hit )
     {
         
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("1"))
         {
             hp -= 20.0f;
             hit = true;
@@ -53,6 +71,17 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
         
       
     }
+    public void ManaTake()
+    {
+
+        if (Input.GetKeyDown("2"))
+        {
+            curentmp -= 10;
+
+        }
+
+
+    }
 
     public void Death(float hp , bool death)
     {
@@ -60,10 +89,48 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
         if(hp <= 0)
         {
             death = true;
-            
-           
+
+            Destroy(inputManager);
         }
         isDead = death;
-        
+       
+    }
+    public void CheckXP()
+    {
+        if (isLvlMax==false)
+        {
+            if (Input.GetKeyDown("3"))
+            {
+                if (curentXp != maxXP)
+                {
+                    curentXp += 10;
+                }
+                else
+                {
+                    curentXp = 0;
+                    isLvlUp = true;
+                }
+            }
+
+            //Debug.Log("in Check XP  -------> " + " CurentXP===== " + curentXp);
+        }
+      
+    }
+    public void CheckLvl()
+    {
+        if (isLvlUp==true)
+        {
+            isLvlUp = false;
+            maxXP += 100;
+            curentlevel += 1;
+            if(curentlevel == maxLvl)
+            {
+                curentXp = maxXP;
+                isLvlMax = true;
+            }
+            //Debug.Log("in Check Level  -------> " + " curentlevel===== " + curentXp);
+            //Debug.Log("in Check Level  -------> " + " maxXP===== " + curentXp);
+
+        }
     }
 }

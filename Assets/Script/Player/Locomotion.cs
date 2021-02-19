@@ -6,15 +6,20 @@ using UnityEngine.InputSystem;
 public class Locomotion : MonoBehaviour
 {
     [Header("Character Movement Settings")]
-    [Range(100.0f,250.0f)][SerializeField] float speed=200.0f;
+    [Range(100.0f, 250.0f)] [SerializeField] float speed = 200.0f;
+
+
 
     [SerializeField] CharacterStats player;
     //CharacterController controller;
-    Vector2 dir=new Vector2();
+    Vector2 dir = new Vector2();
     Rigidbody rigid;
-
+    Vector3 charpos = new Vector3();
     //Character Animation settings
     Animator anim;
+    //bool isInAction = false;
+    bool isIdle = false;
+    bool isActive = false;
     bool isWalk = false;
     bool run = false;
     bool isRun = false;
@@ -23,22 +28,23 @@ public class Locomotion : MonoBehaviour
     bool defence = false;
     bool isDefence = false;
     bool isDead = false;
-    bool isDamage = false;
     bool isBlockWalk = false;
-    float gethit = 0f;
-   
+    bool roll = false;
+    bool isRoll = false;
+    //bool isDamage = false;
+
 
     private void Awake()
     {
 
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-       
+
     }
     // Start is called before the first frame update
     void Start()
     {
-       
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -54,21 +60,35 @@ public class Locomotion : MonoBehaviour
     {
         attack = context.ReadValueAsButton();
     }
-    public void OnDefence( InputAction.CallbackContext context)
+    public void OnDefence(InputAction.CallbackContext context)
     {
         defence = context.ReadValueAsButton();
+    }
+    public void OnRoll(InputAction.CallbackContext context)
+    {
+        roll = context.ReadValueAsButton();
     }
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(gethit);
+        //if (Input.GetButtonDown("Jump"))
+        //{
+        //    anim.SetTrigger("roll");
+        //}
     }
 
     //Player Takedamage trigger
-    private void CharGetHit()
-    {
-        isDamage = (player.isDamage == true) ? true : false;
+    //private void CharGetHit()
+    //{
+    //    isDamage = (player.isDamage == true) ? true : false;
 
+    //}
+
+    private void CharRoll()
+    {
+      isRoll = (roll == true) ? true : false;
+     
+      
     }
     //Player Death trigger
     private void CharDeath()
@@ -78,11 +98,11 @@ public class Locomotion : MonoBehaviour
     // Player Defence Trigger
     private void CharDefence()
     {
-        if (defence == true )
+        if (defence == true)
         {
             isRun = false;
             isDefence = true;
-            
+
         }
         else
         {
@@ -110,32 +130,34 @@ public class Locomotion : MonoBehaviour
     private void CharAttack()
     {
 
-        isAttack = attack==true ? true : false;
+        isAttack = attack == true ? true : false;
 
     }
     private void CharMovement()
     {
-        //Character move in horzontolly 
-        Vector2 pos = new Vector2();
-        Vector3 charpos = new Vector3();
-        pos += (dir.normalized * speed) * Time.fixedDeltaTime;
-
-
-        //Exchang Vector2 InputAction --> pos to a new Vector3 --> charpos
-        charpos.x = pos.x;
-        charpos.z = pos.y;
-
-        //Character Movement 
-        rigid.velocity = charpos;
-        if (dir.x != 0.0f || dir.y != 0.0f)
+        if (isActive == false)
         {
-            /* Reference 1.
-            /* Character Rotation           
-            */ 
-            transform.rotation = Quaternion.LookRotation(rigid.velocity, Vector3.up);
-        }
+            //Character move in horzontolly 
+            Vector2 pos = new Vector2();
+          
+            pos += (dir.normalized * speed) * Time.fixedDeltaTime;
 
-      
+
+            //Exchang Vector2 InputAction --> pos to a new Vector3 --> charpos
+            charpos.x = pos.x;
+            charpos.z = pos.y;
+
+            //Character Movement 
+            rigid.velocity = charpos;
+            if (dir.x != 0.0f || dir.y != 0.0f)
+            {
+                /* Reference 1.
+                /* Character Rotation           
+                */
+                transform.rotation = Quaternion.LookRotation(rigid.velocity, Vector3.up);
+            }
+
+        }
 
 
 
@@ -156,6 +178,8 @@ public class Locomotion : MonoBehaviour
     //Set Character Animation Walk,Run,Attack, Block and Death  
     void SetAnimation()
     {
+        isIdle = (dir.x == 0.0f && dir.y == 0.0f) ? true : false;
+        anim.SetBool("idle", isIdle);
         isWalk = (dir.x != 0.0f || dir.y != 0.0f) ? true : false;
         anim.SetBool("walk", isWalk);
 
@@ -166,21 +190,27 @@ public class Locomotion : MonoBehaviour
         if (isAttack == true && isRun == false)
         {
             isDefence = false;
+            isWalk = false;
             anim.SetTrigger("attack");
         }
         anim.SetBool("defence", isDefence);
 
-        if (isDead==true)
+        if (isDead == true)
         {
             anim.SetTrigger("death");
         }
         isBlockWalk = (isWalk == true && isDefence == true) ? true : false;
-        anim.SetBool("blockwalk",isBlockWalk);
+        anim.SetBool("blockwalk", isBlockWalk);
 
+        if (isRoll == true)
+        {
+
+            anim.SetTrigger("roll");
+        }
         //if (isDamage==true)
         //{
         //    anim.SetTrigger("takedamage");
-     
+
         //}        
     }
 
@@ -189,11 +219,11 @@ public class Locomotion : MonoBehaviour
         CharMovement();
         CharAttack();
         CharDefence();
-        CharGetHit();
+        CharRoll();
         CharRun();
         CharDeath();
         SetAnimation();
-      
+
     }
 
 

@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField]Image playerHealthUI;
+    [SerializeField] Image playerHealthUI;
     [SerializeField] Image playerMpUI;
-    [SerializeField]CharacterStats player;
+    [SerializeField] Image playerXpUI;
+    [SerializeField] CharacterStats player;
     
     public float hp=100.0f;
 
@@ -26,7 +27,7 @@ public class PlayerUI : MonoBehaviour
         // Bind Player health and Mana to the UI 
         playerHealthUI.fillAmount = player.curentHp/100;
         playerMpUI.fillAmount = player.curentmp / 100;
-
+        playerXpUI.fillAmount = (float)player.curentXp / 100;
    
     }
 }
