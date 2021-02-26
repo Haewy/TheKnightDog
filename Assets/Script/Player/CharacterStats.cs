@@ -21,8 +21,8 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
     [SerializeField] public int curentlevel = 1;
     [SerializeField] public int maxLvl=3;
     
-    public bool isLvlUp = false;
-    public bool isLvlMax = false;
+    private bool isLvlUp = false;
+    private bool isLvlMax = false;
 
     public bool isDead { get; private set; }
     public bool isDamage { get; set; }
@@ -52,8 +52,6 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
         CheckLvl();
         Death(curentHp,isDead);
 
-
-       
 
 
     }

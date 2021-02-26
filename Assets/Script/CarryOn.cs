@@ -64,9 +64,11 @@ public class CarryOn : MonoBehaviour
         {
             Debug.Log("PLAY THE AUDIO!");
             //Potion sound
-            myPotion.potionAudioGet.Play();
+            //myPotion.potionAudioGet.Playoneshot();
+            myPotion.CollectPotion();
             //Potion disappear
-            myCarryON.SetActive(false);
+            //
+            //myCarryON.SetActive(false);
         }
     }
     //Invoke("Disappear", 1);

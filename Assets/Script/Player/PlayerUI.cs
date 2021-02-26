@@ -27,7 +27,7 @@ public class PlayerUI : MonoBehaviour
         // Bind Player health and Mana to the UI 
         playerHealthUI.fillAmount = player.curentHp/100;
         playerMpUI.fillAmount = player.curentmp / 100;
-        playerXpUI.fillAmount = (float)player.curentXp / 100;
+        playerXpUI.fillAmount = (float)player.curentXp / player.maxXP;
    
     }
 }

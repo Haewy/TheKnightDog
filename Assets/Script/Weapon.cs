@@ -9,6 +9,7 @@ public class Weapon : MonoBehaviour
     //[SerializeField] private AudioSource weaponAudioAttack;//
     public Vector3 myPickUpWeapon;
     public Vector3 myPickUpRotation;
+    public int weaponDamage = 10;
     private void OnTriggerEnter(Collider other)//to get the weapon, collide with it then...?
     {
         if (other.gameObject.tag == "Player")
@@ -17,6 +18,12 @@ public class Weapon : MonoBehaviour
             //            
             //attach weapon
             weaponAudioGet.Play();
+        }
+
+        if (other.gameObject.tag == "Enemy")
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            //enemy.hp -= weaponDamage;
         }
     }
 

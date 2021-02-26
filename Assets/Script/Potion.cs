@@ -6,7 +6,18 @@ using UnityEngine.Audio;//in order to use a sound
 public class Potion : MonoBehaviour
 {//variables from the potion only.
     public AudioSource potionAudioGet;   //not sure if it is an audio source or audio clip?
-    //[SerializeField] private AudioSource potionAudioAttack;
+    public AudioClip potionSFX;
+    //private bool okToPlay = false;
+    public void CollectPotion()
+    {
+        //potionAudioGet.Play();
+        //potionAudioGet.transform.DetachChildren();//parent = null;   
+        Transform potionShader = this.transform.Find("Potion_Generic");
+        potionShader.GetComponent<MeshRenderer>().enabled = false;
+        //Destroy(potionShader);
+        //potionAudioGet.Play();
+    }
+
     [SerializeField] private int potionHP;// 
     //GameObject gObject;
 
@@ -15,11 +26,15 @@ public class Potion : MonoBehaviour
     {
         //gObject = GetComponent<GameObject>();
         potionAudioGet = GetComponent<AudioSource>();
+
     }
     private void OnTriggerEnter(Collider other)//to get the weapon, collide with it then...?
     {
         if (other.gameObject.tag == "Player")
         {
+            potionAudioGet.Play();
+            //potionAudioGet.PlayOneShot(potionSFX);
+
             Debug.Log("Is it increasing the HP!?");
 
             //cache the player (player = other)
