@@ -10,10 +10,18 @@ public class Weapon : MonoBehaviour
     public Vector3 myPickUpWeapon;
     public Vector3 myPickUpRotation;
     public int weaponDamage = 10;
+
+    public BoxCollider damageCol;
+    private void Awake()
+    {
+        damageCol = GetComponent<BoxCollider>();
+    }
+
     private void OnTriggerEnter(Collider other)//to get the weapon, collide with it then...?
     {
         if (other.gameObject.tag == "Player")
         {
+            damageCol.isTrigger = false;
             //weaponAudioGet.
             //            
             //attach weapon

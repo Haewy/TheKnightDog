@@ -24,7 +24,7 @@ public class Locomotion : MonoBehaviour
     bool run = false;
     bool isRun = false;
     bool attack = false;
-    bool isAttack = false;
+    public bool isAttack = false;
     bool defence = false;
     bool isDefence = false;
     bool isDead = false;
@@ -36,8 +36,8 @@ public class Locomotion : MonoBehaviour
 
     private void Awake()
     {
-
-        rigid = GetComponent<Rigidbody>();
+        rigid = GetComponentInChildren<Rigidbody>();
+        //  rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
 
     }
@@ -82,7 +82,7 @@ public class Locomotion : MonoBehaviour
     //{
     //    isDamage = (player.isDamage == true) ? true : false;
 
-    //}
+    //} w
 
     private void CharRoll()
     {
@@ -204,7 +204,7 @@ public class Locomotion : MonoBehaviour
 
         if (isRoll == true)
         {
-
+            Debug.Log("Pressed ");
             anim.SetTrigger("roll");
         }
         //if (isDamage==true)

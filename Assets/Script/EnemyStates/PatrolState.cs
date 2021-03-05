@@ -20,6 +20,7 @@ public class PatrolState : MonoBehaviour
     
     bool isWalk;                                       // control enmey walk  
     bool isIdle;                                       // control enmey idle 
+    bool isAttack;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -46,10 +47,13 @@ public class PatrolState : MonoBehaviour
             if (enemyAgent.destination.magnitude - patrolpoints[currentPoint].position.magnitude >= 0.1)
             {
                 isWalk = false;
-                anim.SetBool("walk", isWalk);
+                anim.SetBool("Walk", isWalk);
                 isIdle = true;
                 anim.SetBool("idle", isIdle);
-              
+                isAttack = false;
+                anim.SetBool("attack", isAttack);
+
+
             }
             else
             {
@@ -57,6 +61,8 @@ public class PatrolState : MonoBehaviour
                 anim.SetBool("walk", isWalk);
                 isIdle = false;
                 anim.SetBool("idle", isIdle);
+                isAttack = false;
+                anim.SetBool("attack", isAttack);
             }
 
             /* count the currentPoints 

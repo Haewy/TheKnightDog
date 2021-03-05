@@ -70,6 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   potionAudioGet: {fileID: 8808303104880293309}
+  potionSFX: {fileID: 0}
   potionHP: 0
 --- !u!82 &8808303103945892825
 AudioSource:
@@ -206,7 +207,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8808303104880293308}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: e2c2e5ef3523360439343877472237a8, type: 2}
   m_audioClip: {fileID: 8300000, guid: ba4a6a8103f78d64f815bf804642e8c7, type: 3}

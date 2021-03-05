@@ -7,15 +7,16 @@ public class Enemy : MonoBehaviour
 {
     //https://flowtree.tistory.com/19?category=378006
 
-    [SerializeField] private enum EnemyType { Burrow,Log };
+    [SerializeField] private enum EnemyType { Burrow,Log,Mushroom };
     [SerializeField] private EnemyType enemyType;
     [SerializeField] public int hp;
     [SerializeField] public int damage = 10;
     [SerializeField] private int xp; // When the player kills an enemy the player gets xp // Burrow: 20, Log: 40, Boss: 100
     [SerializeField] public Transform target;
     [SerializeField] private BoxCollider attackRange; // Work for the enemy keeps repeating attack and stop in a
+    [SerializeField] public GameObject fireBall;
 
-    //private float distance;
+    private float distance;
     //private Transform log;
     private bool isChase;
     private bool isAttack;
@@ -43,18 +44,20 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //distance = Vector3.Distance(transform.position, target.transform.position);
+        distance = Vector3.Distance(transform.position, target.transform.position);
         
         if (nav.enabled)
         {
             nav.SetDestination(target.position);
             nav.isStopped = !isChase;
         }
+        OnTarget();
 
     }
     private void FixedUpdate()
     {
         FreezeVelocity();
+        
 
     }
     // When the player is in an attack range the enemy starts punching
@@ -66,11 +69,15 @@ public class Enemy : MonoBehaviour
         {
             case EnemyType.Burrow:
                 targetRadius = 1.5f;
-                targetRange = 3.0f;
+                targetRange = 0.5f;
 ;                break;
             case EnemyType.Log:
                 targetRadius = 1.0f;
-                targetRange = 20.0f;                
+                targetRange = 5f;                
+                break;
+            case EnemyType.Mushroom:
+                targetRadius = 0.5f;
+                targetRange = 20f;
                 break;
             default:
                 break;
@@ -89,8 +96,6 @@ public class Enemy : MonoBehaviour
     {
         isChase = false;
         isAttack = true;
-        //this.transform.LookAt(target.transform);
-        //anim.SetBool("isAttack", true);
 
         switch (enemyType)
         {
@@ -108,15 +113,22 @@ public class Enemy : MonoBehaviour
                 this.transform.LookAt(target.transform);
 
                 yield return new WaitForSeconds(0.3f);
-                rigid.AddForce(transform.forward * 20, ForceMode.Impulse);
+                rigid.AddForce(transform.forward * 50f, ForceMode.Impulse);
                 attackRange.enabled = true;
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.3f);
                 rigid.velocity = Vector3.zero;
                 attackRange.enabled = false;
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(1f);
 
                 break;
+            case EnemyType.Mushroom:
+                yield return new WaitForSeconds(0.3f);
+                GameObject instanceFireBall = Instantiate(fireBall, transform.position, transform.rotation);
+                Rigidbody rigidFireBall = instanceFireBall.GetComponent<Rigidbody>();
+                rigidFireBall.velocity = transform.forward * 20;
+                yield return new WaitForSeconds(1f);
 
+                break;
             default:
                 break;
         }
@@ -187,11 +199,9 @@ public class Enemy : MonoBehaviour
     // Get attack from the player (Damaging)
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "Weapon" || collision.collider.tag == "Player")  
+        if (collision.collider.tag == "Weapon" || collision.collider.tag == "Player")  // || collision.collider.tag == "Player"
         {
-            StartCoroutine(OnAttack());
-            //StartCoroutine(OnDamage());
-            hp -= damage;
+           // hp -= damage;
 
             // cache PlayerMove's script
             CharacterStats player = collision.collider.GetComponent<CharacterStats>();
