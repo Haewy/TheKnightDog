@@ -14,8 +14,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int xp; // When the player kills an enemy the player gets xp // Burrow: 20, Log: 40, Boss: 100
     [SerializeField] public Transform target;
     [SerializeField] private BoxCollider attackRange; // Work for the enemy keeps repeating attack and stop in a
-    [SerializeField] public GameObject fireBall;
-
+    [SerializeField] private GameObject fireBall;
+    [SerializeField] private Transform fireBallPos;
+    public CharacterStats playerState;
+    
     private float distance;
     //private Transform log;
     private bool isChase;
@@ -31,6 +33,7 @@ public class Enemy : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();       
         anim = GetComponent<Animator>();
+        
 
         Invoke("OnChase", 2);
     }
@@ -38,7 +41,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-     
+        
     }
    
     // Update is called once per frame
@@ -68,6 +71,8 @@ public class Enemy : MonoBehaviour
         switch (enemyType)
         {
             case EnemyType.Burrow:
+
+                    
                 targetRadius = 1.5f;
                 targetRange = 0.5f;
 ;                break;
@@ -101,6 +106,7 @@ public class Enemy : MonoBehaviour
         {
             case EnemyType.Burrow:
                 anim.SetBool("isAttack", true);
+                playerState.GetDamage(10);
                 yield return new WaitForSeconds(0.3f);
                 attackRange.enabled = true;
                 yield return new WaitForSeconds(0.3f);
@@ -111,7 +117,7 @@ public class Enemy : MonoBehaviour
 
             case EnemyType.Log:
                 this.transform.LookAt(target.transform);
-
+                //playerState.GetDamage(10);
                 yield return new WaitForSeconds(0.3f);
                 rigid.AddForce(transform.forward * 50f, ForceMode.Impulse);
                 attackRange.enabled = true;
@@ -122,10 +128,10 @@ public class Enemy : MonoBehaviour
 
                 break;
             case EnemyType.Mushroom:
+                //playerState.GetDamage(10);
                 yield return new WaitForSeconds(0.3f);
-                GameObject instanceFireBall = Instantiate(fireBall, transform.position, transform.rotation);
-                Rigidbody rigidFireBall = instanceFireBall.GetComponent<Rigidbody>();
-                rigidFireBall.velocity = transform.forward * 20;
+                GameObject instanceFireBall = Instantiate(fireBall, fireBallPos.position, fireBallPos.rotation);
+                instanceFireBall.GetComponent<Rigidbody>().AddForce(fireBallPos.forward * 20f, ForceMode.Impulse);
                 yield return new WaitForSeconds(1f);
 
                 break;
@@ -143,68 +149,24 @@ public class Enemy : MonoBehaviour
         isAttack = false;
         anim.SetBool("isWalk", true);
     }
-    //IEnumerator OnDamage()
-    //{
-    //    yield return new WaitForSeconds(0.1f);
-    //    // cache PlayerMove's script
-    //    //CharacterStats player = GetComponent<CharacterStats>();
-    //    PlayerMove player1 = GetComponent<PlayerMove>();
-    //    // When Enemy reaches 0 point of hp, Enemy destories
-    //    if (hp <= 0)
-    //    {
-    //        // Chasing and Nav AI stop and when the enemy is dead
-    //        //isChase = false;
-    //        //nav.enabled = false;
 
-
-    //        // Increase the player's xp
-    //        switch (enemyType)
-    //        {
-    //            case EnemyType.Burrow:
-    //                isChase = false;
-    //                nav.enabled = false;
-    //                anim.SetTrigger("doDie");
-    //                xp = 20;
-    //                break;
-    //            case EnemyType.Log:
-    //                isChase = false;
-    //                nav.enabled = false;
-    //                anim.SetBool("isWalk", false);
-
-    //                //rigid.AddForce(transform.localPosition.x, -0.12f, transform.localPosition.z);
-    //                //this.transform.position = this.transform.position + new Vector3(0, -0.2f, 0);
-    //                this.transform.position = new Vector3(transform.position.x, -0.2f, transform.position.z);
-    //                xp = 40;
-    //                break;
-    //            default:
-    //                break;
-    //        }
-    //        //player.curentXp += xp;
-    //        player1.xp += xp;
-    //    }
-    //}
     // Prevent the enemy from rotating
     void FreezeVelocity() // From googleit
     {
         rigid.velocity = Vector3.zero;
         rigid.angularVelocity = Vector3.zero;
-        //if (isChase)
-        //{
-        //    rigid.velocity = Vector3.zero;
-        //    rigid.angularVelocity = Vector3.zero;
-        //}
 
     }
 
     // Get attack from the player (Damaging)
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.tag == "Weapon" || collision.collider.tag == "Player")  // || collision.collider.tag == "Player"
+        if (collision.collider.tag == "Weapon")  // || collision.collider.tag == "Player"
         {
-           // hp -= damage;
-
+            hp -= damage;
+            //playerState.GetDamage(10);
             // cache PlayerMove's script
-            CharacterStats player = collision.collider.GetComponent<CharacterStats>();
+            //CharacterStats player = collision.collider.GetComponent<CharacterStats>();
             //PlayerMove player1 = collision.collider.GetComponent<PlayerMove>();
             
             // When Enemy reaches 0 point of hp, Enemy destories
@@ -225,14 +187,21 @@ public class Enemy : MonoBehaviour
                     case EnemyType.Log:
                         anim.SetBool("isWalk", false);
                         anim.SetBool("isAttack", false);
-                        xp = 40;
+                        xp = 30;
+                        Destroy(gameObject, 3.0f);
+                        break;
+                    case EnemyType.Mushroom:
+                        anim.SetTrigger("doDie");
+                        xp = 50;
+                        Destroy(gameObject, 3.0f);
                         break;
                     default:
                         break;
                 }
-                player.curentXp += xp;
+                //player.curentXp += xp;
                 //player1.xp += xp;
                 //Destroy(gameObject, 3.0f);
+                playerState.curentXp += xp;
             }
 
         }

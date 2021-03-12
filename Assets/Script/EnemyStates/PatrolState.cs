@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
+[System.Serializable]
 public class PatrolState : MonoBehaviour
 {
     
@@ -24,7 +26,7 @@ public class PatrolState : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        enemyAgent = GetComponent<NavMeshAgent>();
+        //  enemyAgent = GetComponent<NavMeshAgent>();
 
     }
     public void Reaction()
@@ -34,6 +36,8 @@ public class PatrolState : MonoBehaviour
 
     public void CurrentSate()
     {
+     
+        //TimeCounter();
         // Timer equal to 0, the enemy will move
         if (timer == 0)
         {
@@ -75,10 +79,13 @@ public class PatrolState : MonoBehaviour
             {
                 currentPoint = 0;
             }
+
+          
+            Debug.Log(patrolpoints[currentPoint]);
         }
     }
     // TimeCouter will count how long the enemy will move to the next point 
-    void TimeCounter()
+   public void TimeCounter()
     {
         timer += Time.deltaTime;
         if (timer >= 3)
@@ -88,8 +95,8 @@ public class PatrolState : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Reaction();
-        CurrentSate();
+        //Reaction();
+        //CurrentSate();
     }
 
     void Update()

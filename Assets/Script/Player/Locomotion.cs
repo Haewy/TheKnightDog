@@ -32,12 +32,12 @@ public class Locomotion : MonoBehaviour
     bool roll = false;
     bool isRoll = false;
     //bool isDamage = false;
+    [Range(1.0f, 50.0f)] [SerializeField]float rollSpeed = 1.0f;
 
 
     private void Awake()
     {
         rigid = GetComponentInChildren<Rigidbody>();
-        //  rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
 
     }
@@ -68,6 +68,8 @@ public class Locomotion : MonoBehaviour
     {
         roll = context.ReadValueAsButton();
     }
+
+   
     // Update is called once per frame
     void Update()
     {
@@ -135,8 +137,7 @@ public class Locomotion : MonoBehaviour
     }
     private void CharMovement()
     {
-        if (isActive == false)
-        {
+        
             //Character move in horzontolly 
             Vector2 pos = new Vector2();
           
@@ -157,7 +158,7 @@ public class Locomotion : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(rigid.velocity, Vector3.up);
             }
 
-        }
+        
 
 
 
@@ -187,13 +188,18 @@ public class Locomotion : MonoBehaviour
         anim.SetBool("run", isRun);
 
 
-        if (isAttack == true && isRun == false)
-        {
-            isDefence = false;
-            isWalk = false;
-            anim.SetTrigger("attack");
-        }
-        anim.SetBool("defence", isDefence);
+        
+            if (isAttack == true && isRun == false)
+            {
+                isDefence = false;
+            // isWalk = false;
+            isIdle = false;
+               anim.SetTrigger("attack");
+            
+            }
+            anim.SetBool("defence", isDefence);
+        
+        
 
         if (isDead == true)
         {
@@ -204,8 +210,13 @@ public class Locomotion : MonoBehaviour
 
         if (isRoll == true)
         {
-            Debug.Log("Pressed ");
+            rigid.velocity = rigid.velocity * rollSpeed; // test
+
             anim.SetTrigger("roll");
+            
+            isWalk = false;
+           
+
         }
         //if (isDamage==true)
         //{

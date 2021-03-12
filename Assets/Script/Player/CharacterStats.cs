@@ -44,7 +44,8 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
     void Update()
     {
         // Test Method for Player take damage and death animation  
-        DamageTake(curentHp,isDamage);
+        //DamageTake(curentHp,isDamage);
+        
         ManaTake();
 
         //Check Player Level up 
@@ -55,10 +56,13 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
 
 
     }
-
-    public void DamageTake(float hp,bool hit )
+    public void GetDamage(float damage)
     {
-        
+        curentHp -= damage;
+    }
+    public void DamageTake(float hp, bool hit)
+    {
+
         if (Input.GetKeyDown("1"))
         {
             hp -= 20.0f;
@@ -66,8 +70,8 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
         }
         curentHp = hp;
         isDamage = hit;
-        
-      
+
+
     }
     public void ManaTake()
     {
@@ -81,17 +85,17 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
 
     }
 
-    public void Death(float hp , bool death)
+    public void Death(float hp, bool death)
     {
         curentHp = hp;
-        if(hp <= 0)
+        if (hp <= 0)
         {
             death = true;
 
             Destroy(inputManager);
         }
         isDead = death;
-       
+
     }
     public void CheckXP()
     {

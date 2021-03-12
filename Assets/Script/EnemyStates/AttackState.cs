@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+[System.Serializable]
 public class AttackState : MonoBehaviour
 {
-
-   
     [SerializeField] private Transform player;         // Get all the Partrol points
     [SerializeField] private GameObject enemy;         // Get the Enemy Object 
     [SerializeField] private NavMeshAgent enemyAgent;  // Get Enemy NavMesh
@@ -14,7 +13,9 @@ public class AttackState : MonoBehaviour
     private Vector3 destination;                       // Set current points(current transform)
     private Vector3 dir;
     [SerializeField] float range;
+
     private float moveMage;
+    public CharacterStats playerState;
 
     bool isIdle;
     bool isWalk;                                       // control enmey walk  
@@ -28,30 +29,34 @@ public class AttackState : MonoBehaviour
 
     private void Update()
     {
-        AttackChase();
+        //AttackChase();
     }
-    void AttackChase()
+    public void AttackChase()
     {
         if (enemy != null)
         {
-            dir = player.position - enemy.transform.position;
-            enemy.transform.rotation = Quaternion.LookRotation(dir);
+            //dir = player.position - enemy.transform.position;
+            //enemy.transform.rotation = Quaternion.LookRotation(dir);
 
-            destination = player.position;
-            enemyAgent.destination = destination;
+            //destination = player.position;
+            //enemyAgent.destination = destination;
 
             moveMage = Mathf.Abs(enemy.transform.position.sqrMagnitude - player.position.sqrMagnitude);
 
 
 
-            if (moveMage >= 100f)
+            if (moveMage >= enemyAgent.stoppingDistance)
             {
 
                 //Debug.Log(Mathf.Abs(enemy.transform.position.sqrMagnitude - player.position.sqrMagnitude));
-                isWalk = true;
-                anim.SetBool("walk", isWalk);
-                isAttack = false;
-                anim.SetBool("attack", isAttack);
+                //isWalk = true;
+                //anim.SetBool("walk", isWalk);
+                //if (isAttack)
+                //{
+                //    playerState.GetDamage(10);
+                //}
+                //isAttack = false;
+                //anim.SetBool("attack", isAttack);
 
             }
 
@@ -67,7 +72,8 @@ public class AttackState : MonoBehaviour
                 isWalk = false;
                 anim.SetBool("walk", isWalk);
 
-
+                isAttack = true;
+                anim.SetBool("attack", isAttack);
             }
         }
         
@@ -79,6 +85,15 @@ public class AttackState : MonoBehaviour
             isIdle = false;
             anim.SetBool("idle", isIdle);
             isAttack = true;
+            anim.SetBool("attack", isAttack);
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (enemy != null)
+        {
+
+            isAttack = false ;
             anim.SetBool("attack", isAttack);
         }
     }

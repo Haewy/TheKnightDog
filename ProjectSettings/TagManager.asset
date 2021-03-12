@@ -8,6 +8,10 @@ TagManager:
   - Potion
   - Enemy
   - Boss
+  - Fireball
+  - Minimap
+  - Ground
+  - Menu
   layers:
   - Default
   - TransparentFX
@@ -17,7 +21,7 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - 
+  - Minimap
   - 
   - 
   - 
