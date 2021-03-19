@@ -30,7 +30,9 @@ public class Locomotion : MonoBehaviour
     bool isDead = false;
     bool isBlockWalk = false;
     bool roll = false;
-    bool isRoll = false;
+   bool isRoll = false;
+   public  bool pause = false;
+   public bool isPause ;
     //bool isDamage = false;
     [Range(1.0f, 50.0f)] [SerializeField]float rollSpeed = 1.0f;
 
@@ -39,7 +41,7 @@ public class Locomotion : MonoBehaviour
     {
         rigid = GetComponentInChildren<Rigidbody>();
         anim = GetComponent<Animator>();
-
+        isPause = false;
     }
     // Start is called before the first frame update
     void Start()
@@ -68,6 +70,11 @@ public class Locomotion : MonoBehaviour
     {
         roll = context.ReadValueAsButton();
     }
+    public void InPause(InputAction.CallbackContext context)
+    {
+        pause = context.ReadValueAsButton();
+       
+    }
 
    
     // Update is called once per frame
@@ -86,6 +93,14 @@ public class Locomotion : MonoBehaviour
 
     //} w
 
+    private void IsInvoke()
+    {
+        
+        if (pause==true)
+        {
+          isPause= !isPause;
+        }
+    }
     private void CharRoll()
     {
       isRoll = (roll == true) ? true : false;
@@ -233,6 +248,7 @@ public class Locomotion : MonoBehaviour
         CharRoll();
         CharRun();
         CharDeath();
+        IsInvoke();
         SetAnimation();
 
     }

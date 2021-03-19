@@ -5,17 +5,14 @@ using UnityEngine;
 public class FireBall : MonoBehaviour
 {
     public int damage;
-    public CharacterStats playerState;
+    CharacterStats player;
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Ground")
         {
-            
+            player.GetDamage(damage);
             Destroy(gameObject);
-            playerState.GetDamage(10);
         }
-
-
     }
 
 }

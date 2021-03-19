@@ -97,7 +97,7 @@ public class StateControllerTest : MonoBehaviour
 
         foreach (GameObject critter in enemylist)
         {
-            if (isEmpty == false)
+            if (isEmpty == false || bossEnemy!=null)
             {
 
                 if (Mathf.Abs(critter.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) >= 500)

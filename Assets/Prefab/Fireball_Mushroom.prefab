@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8549040957472407185}
   - component: {fileID: 2128609495746975941}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: Particle_Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 3261442079238048155}
   - component: {fileID: 3412944797209476948}
   - component: {fileID: 7056569467990557040}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: Fireball_Mushroom
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3412944797209476949}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.613, z: 0.233}
+  m_LocalPosition: {x: -0.082, y: 2.98, z: 0.233}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 8549040957472407185}
@@ -237,7 +237,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!135 &3412944797209476948
 SphereCollider:
@@ -265,4 +265,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  playerState: {fileID: 0}

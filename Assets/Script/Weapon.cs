@@ -10,7 +10,8 @@ public class Weapon : MonoBehaviour
     public Vector3 myPickUpWeapon;
     public Vector3 myPickUpRotation;
     public int weaponDamage = 10;
-
+    public Inventory inventory;
+    public bool onWeapon = false;
     public BoxCollider damageCol;
     private void Awake()
     {
@@ -26,6 +27,9 @@ public class Weapon : MonoBehaviour
             //            
             //attach weapon
             weaponAudioGet.Play();
+            inventory.ActivateSlot1();
+            onWeapon = true;
+
         }
 
         if (other.gameObject.tag == "Enemy")
@@ -34,7 +38,19 @@ public class Weapon : MonoBehaviour
             //enemy.hp -= weaponDamage;
         }
     }
-
+    public void turnOnOff()
+    {
+        if (onWeapon)
+        {
+            this.gameObject.SetActive(false);
+            onWeapon = false;
+        }
+        else
+        {
+            this.gameObject.SetActive(true);
+            onWeapon = true;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

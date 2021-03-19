@@ -17,7 +17,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject fireBall;
     [SerializeField] private Transform fireBallPos;
     public CharacterStats playerState;
-    
+    public GameObject reward;
+    public Transform enemyDeadPos;
+
     private float distance;
     //private Transform log;
     private bool isChase;
@@ -32,8 +34,7 @@ public class Enemy : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         nav = GetComponent<NavMeshAgent>();       
-        anim = GetComponent<Animator>();
-        
+        anim = GetComponent<Animator>();    
 
         Invoke("OnChase", 2);
     }
@@ -47,15 +48,18 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void AttackState()
+    {
         distance = Vector3.Distance(transform.position, target.transform.position);
-        
+
         if (nav.enabled)
         {
             nav.SetDestination(target.position);
             nav.isStopped = !isChase;
         }
         OnTarget();
-
     }
     private void FixedUpdate()
     {
@@ -70,19 +74,17 @@ public class Enemy : MonoBehaviour
         float targetRange = 0;
         switch (enemyType)
         {
-            case EnemyType.Burrow:
-
-                    
+            case EnemyType.Burrow:                 
                 targetRadius = 1.5f;
                 targetRange = 0.5f;
 ;                break;
             case EnemyType.Log:
                 targetRadius = 1.0f;
-                targetRange = 5f;                
+                targetRange = 3.0f;                
                 break;
             case EnemyType.Mushroom:
                 targetRadius = 0.5f;
-                targetRange = 20f;
+                targetRange = 10f;
                 break;
             default:
                 break;
@@ -128,6 +130,7 @@ public class Enemy : MonoBehaviour
 
                 break;
             case EnemyType.Mushroom:
+                anim.SetBool("isAttack", true);
                 //playerState.GetDamage(10);
                 yield return new WaitForSeconds(0.3f);
                 GameObject instanceFireBall = Instantiate(fireBall, fireBallPos.position, fireBallPos.rotation);
@@ -164,25 +167,25 @@ public class Enemy : MonoBehaviour
         if (collision.collider.tag == "Weapon")  // || collision.collider.tag == "Player"
         {
             hp -= damage;
-            //playerState.GetDamage(10);
-            // cache PlayerMove's script
-            //CharacterStats player = collision.collider.GetComponent<CharacterStats>();
-            //PlayerMove player1 = collision.collider.GetComponent<PlayerMove>();
             
             // When Enemy reaches 0 point of hp, Enemy destories
             if (hp <= 0)
             {
                 // Chasing and Nav AI stop and when the enemy is dead
                 isChase = false;
+                isAttack = false;
                 nav.enabled = false;
-
+                
                 // Increase the player's xp
                 switch (enemyType)
                 {
-                    case EnemyType.Burrow:
+                    case EnemyType.Burrow:                        
                         anim.SetTrigger("doDie");
                         xp = 20;
-                        Destroy(gameObject, 3.0f);
+                        Destroy(gameObject, 2.0f);
+                        GameObject rewardInstance = Instantiate(reward,enemyDeadPos.transform.position,Quaternion.identity);
+                        // Why many clones ????
+                        // Why isn't the position of reward the place where an enemy died ??
                         break;
                     case EnemyType.Log:
                         anim.SetBool("isWalk", false);
@@ -192,18 +195,17 @@ public class Enemy : MonoBehaviour
                         break;
                     case EnemyType.Mushroom:
                         anim.SetTrigger("doDie");
+
                         xp = 50;
                         Destroy(gameObject, 3.0f);
                         break;
                     default:
                         break;
                 }
-                //player.curentXp += xp;
-                //player1.xp += xp;
-                //Destroy(gameObject, 3.0f);
-                playerState.curentXp += xp;
+               
+                playerState.curentXp += xp;             
+                
             }
-
         }
     }
 

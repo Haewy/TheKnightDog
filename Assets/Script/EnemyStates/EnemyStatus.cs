@@ -11,14 +11,21 @@ public class EnemyStatus : MonoBehaviour
     [SerializeField] GameObject damageColider;
     [SerializeField] GameObject player;
     [SerializeField] GameObject enemy;
-    Animator anim; 
+    Animator anim;
+
+    Renderer rend;
+    float speed=1f;
+    Color startColor = Color.white;
+    Color endColor = Color.red;
+    bool getHit;
+
     private void Awake()
     {
         hp = 100;
         //dmg = 20;
         isDead = false;
         anim = GetComponent<Animator>();
-
+        rend = GetComponentInChildren<Renderer>();
     }
     private void Start()
     {
@@ -27,6 +34,7 @@ public class EnemyStatus : MonoBehaviour
     private void Update()
     {
         CheckDead();
+        GetHit();
     }
 
     void CheckDead()
@@ -38,6 +46,17 @@ public class EnemyStatus : MonoBehaviour
             Destroy(this.enemy);
         }
     }
+    void GetHit()
+    {
+        if (getHit == true)
+        {
+            // Enemy color change when it get hit 
+            // Reference 5
+            float lerp = Mathf.PingPong(Time.time, speed) / speed;
+            rend.material.color = Color.Lerp(startColor, endColor, lerp); 
+        }
+       
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(weapon!=null)
@@ -46,6 +65,15 @@ public class EnemyStatus : MonoBehaviour
             if (other && player.GetComponent<Locomotion>().isAttack == true)
             {
                 hp -= 20;
+                
+
+                getHit = true;
+          
+               
+            }
+            else
+            {
+                getHit = false;
             }
         }
      
