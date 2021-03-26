@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
 {
@@ -92,10 +93,11 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
         {
             death = true;
 
-            Destroy(inputManager);
+            //Destroy(inputManager);
+            AsyncOperation async = SceneManager.LoadSceneAsync(4);//this line
         }
         isDead = death;
-
+        
     }
     public void CheckXP()
     {

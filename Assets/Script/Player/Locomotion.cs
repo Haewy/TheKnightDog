@@ -104,13 +104,13 @@ public class Locomotion : MonoBehaviour
     private void CharRoll()
     {
       isRoll = (roll == true) ? true : false;
-     
+        roll = false;
       
     }
     //Player Death trigger
     private void CharDeath()
     {
-        isDead = (player.isDead == true) ? true : false;
+       // isDead = (player.isDead == true) ? true : false;
     }
     // Player Defence Trigger
     private void CharDefence()
@@ -228,7 +228,7 @@ public class Locomotion : MonoBehaviour
             rigid.velocity = rigid.velocity * rollSpeed; // test
 
             anim.SetTrigger("roll");
-            
+            isRoll = false;
             isWalk = false;
            
 

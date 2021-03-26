@@ -16,11 +16,12 @@ public class StateControllerTest : MonoBehaviour
     public UnityEvent attackState;
     public UnityEvent patrolState;
     public UnityEvent chaseState;
+    public UnityEvent rangeState;
 
     [SerializeField] bool isAttack;
     [SerializeField] bool isPatrol;
     [SerializeField] bool isChase;
-
+    [SerializeField] bool isRange;
     string enemyTag = "Enemy";
     string bossEnemyTag = "Boss";
     bool isEmpty;
@@ -28,7 +29,7 @@ public class StateControllerTest : MonoBehaviour
 
     private void Awake()
     {
-        if (attackState==null)
+        if (attackState == null)
         {
             attackState = new UnityEvent();
         }
@@ -36,9 +37,14 @@ public class StateControllerTest : MonoBehaviour
         {
             patrolState = new UnityEvent();
         }
+        if (rangeState == null)
+        {
+            rangeState = new UnityEvent();
+        }
         isAttack = false;
         isPatrol = false;
         isChase = false;
+        isRange = false;
 
         enemy.AddRange(GameObject.FindGameObjectsWithTag(enemyTag));
         bossEnemy.AddRange(GameObject.FindGameObjectsWithTag(bossEnemyTag));
@@ -47,39 +53,46 @@ public class StateControllerTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-     
+        CheckEnemyList(enemy);
+        CheckEnemyList(bossEnemy);
+
+        CheckIdleState(enemy);
+        CheckAttackState(enemy);
+
+        CheckChaseState(bossEnemy);
+        CheckIdleState(bossEnemy);
+        CheckAttackState(bossEnemy);
+        CheckRangeState(bossEnemy);
+
     }
     private void FixedUpdate()
     {
-        //CheckIdleState(enemy);
-        CheckIdleState(bossEnemy);
-        CheckAttackState(bossEnemy);
-        CheckChaseState(bossEnemy);
+
+        //CheckChaseState(bossEnemy);
 
     }
-  public void RunAttackState()
+    public void RunAttackState()
     {
         if (isAttack == true)
         {
-          
+
             attackState.Invoke();
-           
+
         }
     }
     public void RunPatrolState()
     {
         if (isPatrol == true)
         {
-            
+
             patrolState.Invoke();
-            
+
         }
     }
     public void RunChaseState()
@@ -91,20 +104,32 @@ public class StateControllerTest : MonoBehaviour
 
         }
     }
+    public void RunRangeState()
+    {
+        if (isRange == true)
+        {
+
+            rangeState.Invoke();
+
+        }
+    }
+
+
 
     private void CheckIdleState(List<GameObject> enemylist)
     {
 
         foreach (GameObject critter in enemylist)
         {
-            if (isEmpty == false || bossEnemy!=null)
+            if (isEmpty == false)
             {
 
-                if (Mathf.Abs(critter.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) >= 500)
+                if (Mathf.Abs(critter.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) >= 1000) // 500
                 {
                     isAttack = false;
                     isPatrol = true;
                     isChase = false;
+                    isRange = false;
                     RunPatrolState();
                     Debug.Log("Run Idle");
                 }
@@ -118,22 +143,49 @@ public class StateControllerTest : MonoBehaviour
         {
             if (isEmpty == false)
             {
-                if (Mathf.Abs(critter.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 100&& isChase==true)
+                if (Mathf.Abs(critter.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 100)
                 {
                     isPatrol = false;
                     isChase = false;
                     isAttack = true;
+                    isRange = false;
                     RunAttackState();
 
                     Debug.Log("Run Attack");
 
                 }
+            }
 
+        }
+
+    }
+    void CheckRangeState(List<GameObject> enemylist)
+    {
+
+        foreach (GameObject critter in enemylist)
+        {
+            if (isEmpty == false)
+            {
+                if (Mathf.Abs(critter.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 500)
+                {
+                    isChase = false;
+                    isPatrol = false;
+                    isAttack = false;
+                    isRange = true; 
+                    RunRangeState();
+
+                    Debug.Log("Range Attack Chase");
+
+                }
+
+            }
+            else
+            {
+                bossEnemy.Clear();
             }
         }
 
     }
-
     void CheckChaseState(List<GameObject> enemylist)
     {
 
@@ -141,17 +193,22 @@ public class StateControllerTest : MonoBehaviour
         {
             if (isEmpty == false)
             {
-                if (Mathf.Abs(critter.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 200)
+                if (Mathf.Abs(critter.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 100) // 200
                 {
                     isChase = true;
                     isPatrol = false;
                     isAttack = false;
+                    isRange = false;
                     RunChaseState();
 
                     Debug.Log("Run Chase");
 
                 }
 
+            }
+            else
+            {
+                bossEnemy.Clear();
             }
         }
 
@@ -163,6 +220,7 @@ public class StateControllerTest : MonoBehaviour
             if (enemylist[i] == null)
             {
                 isEmpty = true;
+                Destroy(this);
             }
             else
             {

@@ -10,9 +10,10 @@ public class FireBall : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Ground")
         {
-            player.GetDamage(damage);
+            //player.GetDamage(damage);
             Destroy(gameObject);
         }
+        //Destroy(gameObject,1f);
     }
 
 }

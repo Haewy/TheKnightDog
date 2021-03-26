@@ -9,10 +9,12 @@ public class AttackState : MonoBehaviour
     [SerializeField] private GameObject enemy;         // Get the Enemy Object 
     [SerializeField] private NavMeshAgent enemyAgent;  // Get Enemy NavMesh
     public Animator anim;
-    [SerializeField]private SphereCollider attackRange;
+    [SerializeField] private SphereCollider attackRange;
     private Vector3 destination;                       // Set current points(current transform)
     private Vector3 dir;
     [SerializeField] float range;
+    [SerializeField] ParticleSystem fireball;
+
 
     private float moveMage;
     public CharacterStats playerState;
@@ -57,6 +59,8 @@ public class AttackState : MonoBehaviour
                 //}
                 //isAttack = false;
                 //anim.SetBool("attack", isAttack);
+                //ParticleSystem particle = GetComponent<ParticleSystem>();
+                //particle.velocityOverLifetime = 
 
             }
 
@@ -76,7 +80,7 @@ public class AttackState : MonoBehaviour
                 anim.SetBool("attack", isAttack);
             }
         }
-        
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -93,7 +97,7 @@ public class AttackState : MonoBehaviour
         if (enemy != null)
         {
 
-            isAttack = false ;
+            isAttack = false;
             anim.SetBool("attack", isAttack);
         }
     }

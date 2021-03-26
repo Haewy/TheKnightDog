@@ -62,9 +62,17 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "47985b1b-9930-41ff-b732-346fbdfba52f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Pause",
                     "type": "Button",
-                    "id": "968b378d-df8b-4009-b133-51d7ba5c08c4",
+                    "id": "844672a7-90a4-47a0-b72c-d12b243dbab9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -337,11 +345,33 @@
                 },
                 {
                     "name": "",
-                    "id": "3ee647b4-5936-4e70-a904-89dc04f9bd2c",
+                    "id": "72a08e9a-ff9f-429a-8554-b92b94dd2e51",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00a7a207-11d3-43e2-8e82-9f050d70bdaa",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2269030-8012-4f43-a15d-61c933018161",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false

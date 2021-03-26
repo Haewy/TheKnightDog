@@ -17,7 +17,7 @@ public class EnemyUI : MonoBehaviour
     void Update()
     {
         bossHealthUI.fillAmount = (float)boss.hp / 100f;
-     
+        bossHealthUI.transform.rotation = cam.transform.rotation;
     }
 
 }

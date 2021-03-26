@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
     public Vector3 myPickUpWeapon;
     public Vector3 myPickUpRotation;
     public int weaponDamage = 10;
-    public Inventory inventory;
+    //public Inventory inventory;
     public bool onWeapon = false;
     public BoxCollider damageCol;
     private void Awake()
@@ -23,10 +23,10 @@ public class Weapon : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             damageCol.isTrigger = false;
-            //weaponAudioGet.
-            //            
             //attach weapon
             weaponAudioGet.Play();
+            Debug.Log("Get the sword");
+            Inventory inventory = other.GetComponent<Inventory>();
             inventory.ActivateSlot1();
             onWeapon = true;
 

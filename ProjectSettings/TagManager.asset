@@ -12,6 +12,7 @@ TagManager:
   - Minimap
   - Ground
   - Menu
+  - Mana
   layers:
   - Default
   - TransparentFX

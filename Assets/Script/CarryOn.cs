@@ -13,6 +13,9 @@ public class CarryOn : MonoBehaviour
     private Weapon myWeapon;
     //
     private Potion myPotion;
+    //
+    private Mana myMana;
+
     void Start()
     {
         //myPlayer = GetComponent<PlayerMove>();
@@ -43,6 +46,17 @@ public class CarryOn : MonoBehaviour
             //myPotion.potionAudioGet.Play();
             //}
         }
+        if (other.gameObject.tag == "Mana")
+        {
+            //if (Input.GetKeyDown(KeyCode.E))
+            //{
+            Debug.Log("Hit3!");
+            myCarryON = other.gameObject;
+            myMana = myCarryON.GetComponent<Mana>();
+            //play audio clip
+            //myPotion.potionAudioGet.Play();
+            //}
+        }
 
     }
     void Update()
@@ -66,6 +80,17 @@ public class CarryOn : MonoBehaviour
             //Potion sound
             //myPotion.potionAudioGet.Playoneshot();
             myPotion.CollectPotion();
+            //Potion disappear
+            //
+            //myCarryON.SetActive(false);
+        }
+        //
+        if (myCarryON != null && myCarryON.tag == "Mana")
+        {
+            Debug.Log("PLAY THE AUDIO!");
+            //Potion sound
+            //myPotion.potionAudioGet.Playoneshot();
+            myMana.CollectMana();
             //Potion disappear
             //
             //myCarryON.SetActive(false);

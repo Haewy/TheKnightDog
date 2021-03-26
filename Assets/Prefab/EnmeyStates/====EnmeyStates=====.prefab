@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 426808118545765391}
-  - component: {fileID: 426808118545765384}
   m_Layer: 0
   m_Name: ====EnmeyStates=====
   m_TagString: Untagged
@@ -31,20 +30,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &426808118545765384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426808118545765385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c732f630f060a7542aca0ffb42ac13be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: []
-  critter: {fileID: 0}
-  boss: {fileID: 5734867598913280015, guid: 9620cf336f3a24e47bd81e7bfc177091, type: 3}
-  bossEnemy: []
-  player: {fileID: 0}

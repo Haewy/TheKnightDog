@@ -29,7 +29,7 @@ public class Potion : MonoBehaviour
         //gObject = GetComponent<GameObject>();
         potionAudioGet = GetComponent<AudioSource>();
         potionHP = 20;
-        //effectHealing = GetComponent<ParticleSystem>();
+        effectHealing = GetComponent<ParticleSystem>();
         effectHealing.Pause();
     }
     public void OnTriggerEnter(Collider other)//to get the weapon, collide with it then...?
@@ -49,7 +49,7 @@ public class Potion : MonoBehaviour
             //gObject.SetActive(false);
             this.transform.SetParent(other.transform);
             inventory.ActivateSlot2();
-
+            this.transform.GetComponent<Collider>().enabled = false;
         }
     }
     public void PlayPotion()
