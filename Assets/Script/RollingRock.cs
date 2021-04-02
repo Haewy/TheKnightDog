@@ -28,6 +28,10 @@ public class RollingRock : MonoBehaviour
             Destroy(gameObject,0.5f);
             //layerState.GetDamage(10);
         }
+        else
+        {
+            Destroy(gameObject, 10f);
+        }
 
     }
 

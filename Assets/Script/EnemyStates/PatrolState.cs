@@ -81,7 +81,7 @@ public class PatrolState : MonoBehaviour
             }
 
           
-            Debug.Log(patrolpoints[currentPoint]);
+           // Debug.Log(patrolpoints[currentPoint]);
         }
     }
     // TimeCouter will count how long the enemy will move to the next point 

@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 5928470578231535923}
   - component: {fileID: 8652554809762941388}
   - component: {fileID: -5804237965226554194}
+  - component: {fileID: 8922461188182883218}
   m_Layer: 0
   m_Name: FVXFireBall
-  m_TagString: Untagged
+  m_TagString: Spell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8159530205508681686}
   m_LocalRotation: {x: 0, y: -0.688671, z: 0, w: 0.72507393}
-  m_LocalPosition: {x: -1.13, y: 0.509, z: -0.06}
+  m_LocalPosition: {x: -0.071, y: 0, z: 0.004}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4835,3 +4836,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
+  onDamage: 0
+--- !u!65 &8922461188182883218
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8159530205508681686}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.7599993, y: 7.459422, z: 0.17}
+  m_Center: {x: 0.59945494, y: 1.15345, z: 2.48}

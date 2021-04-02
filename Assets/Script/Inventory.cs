@@ -23,6 +23,10 @@ public class Inventory : MonoBehaviour
     private GameObject myCharacter;
     public CharacterStats player;
     public ParticleSystem healing;
+    //Diamond counter
+    public int diamondCount;
+    public Text diamondCounter;
+    public GameObject diamondI;
     //Singleton
     private void Awake()
     {
@@ -69,6 +73,7 @@ public class Inventory : MonoBehaviour
         inventoryOn = false;
         potionNumber = 0;
         manaNumber = 0;
+        diamondCount = 0;
     }
     // Update is called once per frame
     void Update()
@@ -187,8 +192,10 @@ public class Inventory : MonoBehaviour
         }
         myMana.PlayMana(manaNumber);
     }
-    public void LessOneMayGoneOut()
+    public void AddDiamond()
     {
-
+        //add one more diamond
+        diamondCount++;
+        diamondCounter.text = " " + diamondCount.ToString("D2");
     }
 }

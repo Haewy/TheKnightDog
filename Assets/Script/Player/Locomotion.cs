@@ -11,6 +11,7 @@ public class Locomotion : MonoBehaviour
 
 
     [SerializeField] CharacterStats player;
+    [SerializeField] Transform playertras;
     //CharacterController controller;
     Vector2 dir = new Vector2();
     Rigidbody rigid;
@@ -30,11 +31,14 @@ public class Locomotion : MonoBehaviour
     bool isDead = false;
     bool isBlockWalk = false;
     bool roll = false;
-   bool isRoll = false;
-   public  bool pause = false;
-   public bool isPause ;
+    bool isRoll = false;
+    public bool pause = false;
+    public bool isPause;
+   public bool isSpell = false;
+    bool spell;
+
     //bool isDamage = false;
-    [Range(1.0f, 50.0f)] [SerializeField]float rollSpeed = 1.0f;
+    [Range(1.0f, 50.0f)] [SerializeField] float rollSpeed = 1.0f;
 
 
     private void Awake()
@@ -51,9 +55,17 @@ public class Locomotion : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        dir = context.ReadValue<Vector2>();
+        if (roll == false||isRoll==false)
+        {
+            dir = context.ReadValue<Vector2>();
+
+        }
     }
 
+    public void OnSpell(InputAction.CallbackContext context)
+    {
+        spell = context.ReadValueAsButton();
+    }
     public void OnRun(InputAction.CallbackContext context)
     {
         run = context.ReadValueAsButton();
@@ -73,10 +85,10 @@ public class Locomotion : MonoBehaviour
     public void InPause(InputAction.CallbackContext context)
     {
         pause = context.ReadValueAsButton();
-       
+
     }
 
-   
+
     // Update is called once per frame
     void Update()
     {
@@ -93,24 +105,29 @@ public class Locomotion : MonoBehaviour
 
     //} w
 
+    private void IsSpell()
+    {
+        isSpell = (spell == true) ? true : false;
+       spell = false;
+    }
     private void IsInvoke()
     {
-        
-        if (pause==true)
+
+        if (pause == true)
         {
-          isPause= !isPause;
+            isPause = !isPause;
         }
     }
     private void CharRoll()
     {
-      isRoll = (roll == true) ? true : false;
+        isRoll = (roll == true) ? true : false;
         roll = false;
-      
+
     }
     //Player Death trigger
     private void CharDeath()
     {
-       // isDead = (player.isDead == true) ? true : false;
+        // isDead = (player.isDead == true) ? true : false;
     }
     // Player Defence Trigger
     private void CharDefence()
@@ -152,10 +169,11 @@ public class Locomotion : MonoBehaviour
     }
     private void CharMovement()
     {
-        
+        if (roll ==false||isRoll ==false)
+        {
             //Character move in horzontolly 
             Vector2 pos = new Vector2();
-          
+
             pos += (dir.normalized * speed) * Time.fixedDeltaTime;
 
 
@@ -172,8 +190,10 @@ public class Locomotion : MonoBehaviour
                 */
                 transform.rotation = Quaternion.LookRotation(rigid.velocity, Vector3.up);
             }
+        }
+       
 
-        
+
 
 
 
@@ -196,25 +216,33 @@ public class Locomotion : MonoBehaviour
     {
         isIdle = (dir.x == 0.0f && dir.y == 0.0f) ? true : false;
         anim.SetBool("idle", isIdle);
-        isWalk = (dir.x != 0.0f || dir.y != 0.0f) ? true : false;
+        isWalk = (dir.x != 0.0f || dir.y != 0.0f&&roll == false) ? true : false;
         anim.SetBool("walk", isWalk);
 
         isRun = (run && isDefence == false) ? true : false;
         anim.SetBool("run", isRun);
 
 
-        
-            if (isAttack == true && isRun == false)
-            {
-                isDefence = false;
+
+        if (isAttack == true && isRun == false)
+        {
+            isDefence = false;
             // isWalk = false;
             isIdle = false;
-               anim.SetTrigger("attack");
+            anim.SetTrigger("attack");
             
-            }
-            anim.SetBool("defence", isDefence);
-        
-        
+
+        }
+        anim.SetBool("defence", isDefence);
+
+        if (isSpell == true )
+        {
+            isDefence = false;
+            isIdle = false;
+            anim.SetTrigger("spell");
+            Debug.Log("QQQQQQQQQ");
+        }
+
 
         if (isDead == true)
         {
@@ -225,14 +253,18 @@ public class Locomotion : MonoBehaviour
 
         if (isRoll == true)
         {
+            rollSpeed = Mathf.Lerp(1f, 10f, 0.5f);
+
             rigid.velocity = rigid.velocity * rollSpeed; // test
 
             anim.SetTrigger("roll");
             isRoll = false;
             isWalk = false;
-           
+            
+
 
         }
+
         //if (isDamage==true)
         //{
         //    anim.SetTrigger("takedamage");
@@ -247,6 +279,7 @@ public class Locomotion : MonoBehaviour
         CharDefence();
         CharRoll();
         CharRun();
+        IsSpell();
         CharDeath();
         IsInvoke();
         SetAnimation();

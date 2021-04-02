@@ -8,7 +8,7 @@ public class FireBall : MonoBehaviour
     CharacterStats player;
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Boss")
         {
             //player.GetDamage(damage);
             Destroy(gameObject);

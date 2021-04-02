@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
@@ -25,6 +26,8 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
     private bool isLvlUp = false;
     private bool isLvlMax = false;
 
+    //Player State
+    [SerializeField] public Button characterState;
     public bool isDead { get; private set; }
     public bool isDamage { get; set; }
 
@@ -47,7 +50,7 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
         // Test Method for Player take damage and death animation  
         //DamageTake(curentHp,isDamage);
         
-        ManaTake();
+        //ManaTake();
 
         //Check Player Level up 
         CheckXP();
@@ -77,11 +80,11 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
     public void ManaTake()
     {
 
-        if (Input.GetKeyDown("2"))
-        {
-            curentmp -= 10;
+        //if (Input.GetKeyDown("2"))
+        //{
+            curentmp -= 20;
 
-        }
+        //}
 
 
     }
@@ -89,6 +92,18 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
     public void Death(float hp, bool death)
     {
         curentHp = hp;
+        if (curentHp>60)
+        {
+            characterState.image.color = Color.white;
+        }
+        else if (curentHp <= 60 && curentHp > 40)
+        {
+            characterState.image.color = Color.yellow;
+        }
+        if (curentHp <= 40)
+        {
+            characterState.image.color = Color.red;
+        }
         if (hp <= 0)
         {
             death = true;

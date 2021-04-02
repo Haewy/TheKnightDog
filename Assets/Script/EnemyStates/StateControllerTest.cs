@@ -6,8 +6,8 @@ using UnityEngine.Events;
 public class StateControllerTest : MonoBehaviour
 {
     [SerializeField] List<GameObject> enemy;
-    [SerializeField] GameObject critter;
-    [SerializeField] GameObject boss;
+    //[SerializeField] GameObject critter;
+    //[SerializeField] GameObject boss;
     [SerializeField] List<GameObject> bossEnemy;
     [SerializeField] GameObject player;
     [Space]
@@ -24,7 +24,7 @@ public class StateControllerTest : MonoBehaviour
     [SerializeField] bool isRange;
     string enemyTag = "Enemy";
     string bossEnemyTag = "Boss";
-    bool isEmpty;
+   public bool isEmpty;
 
 
     private void Awake()
@@ -59,6 +59,12 @@ public class StateControllerTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       // CheckEvent();
+        
+
+    }
+    private void FixedUpdate()
+    {
         CheckEnemyList(enemy);
         CheckEnemyList(bossEnemy);
 
@@ -68,11 +74,9 @@ public class StateControllerTest : MonoBehaviour
         CheckChaseState(bossEnemy);
         CheckIdleState(bossEnemy);
         CheckAttackState(bossEnemy);
-        CheckRangeState(bossEnemy);
 
-    }
-    private void FixedUpdate()
-    {
+
+        CheckRangeState(bossEnemy);
 
         //CheckChaseState(bossEnemy);
 
@@ -83,8 +87,9 @@ public class StateControllerTest : MonoBehaviour
         {
 
             attackState.Invoke();
-
+           
         }
+        
     }
     public void RunPatrolState()
     {
@@ -112,6 +117,10 @@ public class StateControllerTest : MonoBehaviour
             rangeState.Invoke();
 
         }
+        else if (isEmpty== true)
+        {
+            CancelInvoke();
+        }
     }
 
 
@@ -131,7 +140,7 @@ public class StateControllerTest : MonoBehaviour
                     isChase = false;
                     isRange = false;
                     RunPatrolState();
-                    Debug.Log("Run Idle");
+                    //Debug.Log("Run Idle");
                 }
             }
         }
@@ -151,7 +160,7 @@ public class StateControllerTest : MonoBehaviour
                     isRange = false;
                     RunAttackState();
 
-                    Debug.Log("Run Attack");
+                   // Debug.Log("Run Attack");
 
                 }
             }
@@ -174,14 +183,14 @@ public class StateControllerTest : MonoBehaviour
                     isRange = true; 
                     RunRangeState();
 
-                    Debug.Log("Range Attack Chase");
+                   // Debug.Log("Range Attack Chase");
 
                 }
 
             }
             else
             {
-                bossEnemy.Clear();
+                //bossEnemy.Clear();
             }
         }
 
@@ -193,6 +202,7 @@ public class StateControllerTest : MonoBehaviour
         {
             if (isEmpty == false)
             {
+                Debug.Log("Empty!!!!!!!!!" + isEmpty);
                 if (Mathf.Abs(critter.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 100) // 200
                 {
                     isChase = true;
@@ -201,14 +211,14 @@ public class StateControllerTest : MonoBehaviour
                     isRange = false;
                     RunChaseState();
 
-                    Debug.Log("Run Chase");
+                    //Debug.Log("Run Chase");
 
                 }
 
             }
             else
             {
-                bossEnemy.Clear();
+            //    bossEnemy.Clear();
             }
         }
 
@@ -220,13 +230,41 @@ public class StateControllerTest : MonoBehaviour
             if (enemylist[i] == null)
             {
                 isEmpty = true;
-                Destroy(this);
+                Debug.Log("IsEmpty");
+                isAttack = false;
+                isPatrol = false;
+                isChase = false;
+                isRange = false;
+
+                //enemylist.Clear();
             }
             else
             {
+                Debug.Log("IsNOTEmpty");
+
                 isEmpty = false;
             }
         }
 
+    }
+
+    void CheckEvent()
+    {
+        for (int i = 0; i < attackState.GetPersistentEventCount(); i++)
+        {
+            if (attackState.GetPersistentTarget(i) ==null)
+            {
+                attackState.RemoveListener(null);
+            }
+        }
+        for (int i = 0; i < rangeState.GetPersistentEventCount(); i++)
+        {
+            if (rangeState.GetPersistentTarget(i) == null)
+            {
+                
+              
+                Debug.Log("DElete Event");
+            }
+        }
     }
 }

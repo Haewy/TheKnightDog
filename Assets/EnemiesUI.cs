@@ -18,5 +18,6 @@ public class EnemiesUI : MonoBehaviour
     void Update()
     {
         healthBar.fillAmount = (float)enemies.currentHp / (float)enemies.maxHp;
+        
     }
 }

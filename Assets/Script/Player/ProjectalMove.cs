@@ -10,21 +10,26 @@ public class ProjectalMove : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] GameObject player;
     [SerializeField] GameObject fireball;
-
     [SerializeField] ParticleSystem Particle;
+    Locomotion spell;
+    CharacterStats mana;
     void Start()
     {
+        mana = player.GetComponent<CharacterStats>();
+        spell = player.GetComponent<Locomotion>();
         //rig = GetComponentInChildren<Rigidbody>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKeyDown("5"))
+
+        if (spell.isSpell == true)
         {
             RangeAttack();
-
+            
         }
+
     }
 
     public void RangeAttack()
@@ -39,6 +44,6 @@ public class ProjectalMove : MonoBehaviour
         //rig.AddForce(inParticle.transform.position.x * speed, 0, 0);
 
         //Destroy(inParticle, 0.1f);
-        
+        player.GetComponent<CharacterStats>().ManaTake();
     }
 }

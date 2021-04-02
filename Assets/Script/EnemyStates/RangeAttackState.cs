@@ -12,6 +12,8 @@ public class RangeAttackState : MonoBehaviour
 
     [SerializeField] GameObject fireball;
     [SerializeField] ParticleSystem Particle;
+    [SerializeField] GameObject stateController;
+    StateControllerTest empty;
 
     public Animator anim;
     // [SerializeField] private SphereCollider attackRange;
@@ -31,6 +33,7 @@ public class RangeAttackState : MonoBehaviour
 
     private void Awake()
     {
+        empty = stateController.GetComponent<StateControllerTest>();
     }
     // Start is called before the first frame update
     void Start()
@@ -45,25 +48,38 @@ public class RangeAttackState : MonoBehaviour
     }
     private void FixedUpdate()
     {
-      //  TimerCount();
+        //  TimerCount();
     }
 
     public void OnRangeAttack()
     {
-        TimerCount();
-        dir = player.position - enemy.transform.position;
-        enemy.transform.rotation = Quaternion.LookRotation(dir);
-
-        destination = player.position;
-        enemyAgent.destination = destination;
-
-        moveMage = Mathf.Abs(enemy.transform.position.sqrMagnitude - player.position.sqrMagnitude);
-        if (isRangeAttack == true)
+        if (empty.isEmpty == false)
         {
-            RangeAttack();
+            TimerCount();
+
+            dir = player.position - enemy.transform.position;
+            enemy.transform.rotation = Quaternion.LookRotation(dir);
+
+            
+
+            destination = player.position;
+
+            enemyAgent.destination = destination;
+
+            moveMage = Mathf.Abs(enemy.transform.position.sqrMagnitude - player.position.sqrMagnitude);
+            if (isRangeAttack == true)
+            {
+                enemyAgent.velocity = Vector3.zero;
+
+                RangeAttack();
+                anim.SetBool("fire", true);
+            }
+            else
+            {
+                anim.SetBool("fire", false); 
+            }
+
         }
-
-
         //RangeAttack();
 
 
@@ -95,13 +111,15 @@ public class RangeAttackState : MonoBehaviour
     }
     public void RangeAttack()
     {
+       
+        
         ParticleSystem inParticle = Instantiate(Particle);
         inParticle.transform.position = fireball.transform.position;
 
         inParticle.transform.rotation = Quaternion.LookRotation(player.transform.forward * -1f);
 
 
-        Debug.Log("FIRE!!!!!!!!!");
+        //Debug.Log("FIRE!!!!!!!!!");
         ////fireball.transform.position - player.transform.position
         //inParticle.GetComponent<Rigidbody>().AddForce(inParticle.transform.forward * speed * Time.deltaTime);
 

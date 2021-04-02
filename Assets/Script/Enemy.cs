@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     //https://flowtree.tistory.com/19?category=378006
 
-    [SerializeField] private enum EnemyType { Burrow,Log,Mushroom };
+    [SerializeField] private enum EnemyType { Burrow, Log, Mushroom };
     [SerializeField] private EnemyType enemyType;
     [SerializeField] public int maxHp;
     [SerializeField] public int currentHp;
@@ -41,10 +41,10 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        nav = GetComponent<NavMeshAgent>();       
+        nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         rend = GetComponentInChildren<Renderer>();
-        
+
         currentHp = maxHp;
 
         Invoke("OnChase", 2);
@@ -53,9 +53,9 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
-   
+
     // Update is called once per frame
     void Update()
     {
@@ -95,13 +95,13 @@ public class Enemy : MonoBehaviour
         float targetRange = 0;
         switch (enemyType)
         {
-            case EnemyType.Burrow:                 
+            case EnemyType.Burrow:
                 targetRadius = 1.5f;
                 targetRange = 0.5f;
-;                break;
+                ; break;
             case EnemyType.Log:
                 targetRadius = 1.0f;
-                targetRange = 3.0f;                
+                targetRange = 3.0f;
                 break;
             case EnemyType.Mushroom:
                 targetRadius = 0.5f;
@@ -112,7 +112,7 @@ public class Enemy : MonoBehaviour
         }
         // https://blog.naver.com/bsheep91/221486230188
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));
-        
+
         // When the player is in the attack range
         if (hits.Length > 0 && !isAttack) //hits.Length > 0 
         {
@@ -183,20 +183,12 @@ public class Enemy : MonoBehaviour
         }
         yield return new WaitForSeconds(0.5f);
     }
-    //public void OnReward()
-    //{
-    //    if (isDead)
-    //    {
-    //        GameObject rewardInstance = Instantiate(reward, enemyDeadPos.transform.position, Quaternion.identity);
-    //    }
-     
-    //}
 
     // Get attack from the player (Damaging)
     private void OnCollisionEnter(Collision collision)
     {
-        
-        if (collision.collider.tag == "Weapon")  // || collision.collider.tag == "Player"
+
+        if (collision.collider.tag == "Weapon"|| collision.collider.tag == "Spell")  // || collision.collider.tag == "Player"
         {
             
             //currentHp -= damage;

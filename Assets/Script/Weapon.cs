@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour
             damageCol.isTrigger = false;
             //attach weapon
             weaponAudioGet.Play();
-            Debug.Log("Get the sword");
+            //Debug.Log("Get the sword");
             Inventory inventory = other.GetComponent<Inventory>();
             inventory.ActivateSlot1();
             onWeapon = true;

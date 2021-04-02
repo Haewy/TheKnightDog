@@ -6,7 +6,7 @@ public class EnemyStatus : MonoBehaviour
 {
     [SerializeField] public int hp;
    //[SerializeField] int dmg;
-    bool isDead;
+   public bool isDead;
     [SerializeField] Collider weapon;
     [SerializeField] GameObject damageColider;
     [SerializeField] GameObject player;
@@ -18,6 +18,7 @@ public class EnemyStatus : MonoBehaviour
     Color startColor = Color.white;
     Color endColor = Color.red;
     bool getHit;
+    FireBallForce spellDamage;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class EnemyStatus : MonoBehaviour
         isDead = false;
         anim = GetComponent<Animator>();
         rend = GetComponentInChildren<Renderer>();
+        spellDamage = GetComponent<FireBallForce>();
     }
     private void Start()
     {
@@ -35,6 +37,7 @@ public class EnemyStatus : MonoBehaviour
     {
         CheckDead();
         GetHit();
+      
     }
 
     void CheckDead()
@@ -42,8 +45,9 @@ public class EnemyStatus : MonoBehaviour
         if (hp <= 0)
         {
             isDead = true;
-            anim.SetBool("death", isDead);
+            //anim.SetBool("death", isDead);
             Destroy(this.enemy);
+            enemy.SetActive(false);
         }
     }
     void GetHit()
@@ -57,6 +61,7 @@ public class EnemyStatus : MonoBehaviour
         }
        
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if(weapon!=null)
