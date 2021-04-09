@@ -20,6 +20,11 @@ public class EnemyStatus : MonoBehaviour
     bool getHit;
     FireBallForce spellDamage;
 
+    // Added by Haewon
+    // For reward Chest 
+    [SerializeField] GameObject chest;
+    [SerializeField] Transform bossDeadPos;
+
     private void Awake()
     {
         hp = 100;
@@ -28,6 +33,7 @@ public class EnemyStatus : MonoBehaviour
         anim = GetComponent<Animator>();
         rend = GetComponentInChildren<Renderer>();
         spellDamage = GetComponent<FireBallForce>();
+
     }
     private void Start()
     {
@@ -48,6 +54,11 @@ public class EnemyStatus : MonoBehaviour
             //anim.SetBool("death", isDead);
             Destroy(this.enemy);
             enemy.SetActive(false);
+
+            //Added by Haewon
+            GameObject rewardInstance = Instantiate(chest, bossDeadPos.transform.position, Quaternion.LookRotation(bossDeadPos.forward));
+
+
         }
     }
     void GetHit()

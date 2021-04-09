@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3581297753336555931}
   - component: {fileID: 3594687476326373676}
   - component: {fileID: 3594687476326373677}
-  - component: {fileID: 3594687476326373665}
+  - component: {fileID: 2279073243315575801}
   m_Layer: 0
   m_Name: RewardDiamond
   m_TagString: Untagged
@@ -265,7 +265,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3594687476326373665
+--- !u!114 &2279073243315575801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,6 +274,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3594269115187521141}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64d5974184855c845b4b8828c67ec8c0, type: 3}
+  m_Script: {fileID: 11500000, guid: b6cdb0702aa660d4a9f31b4907efbd87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

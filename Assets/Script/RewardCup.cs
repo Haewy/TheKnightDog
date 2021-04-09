@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RewardCup : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class RewardCup : MonoBehaviour
     }
     public void OnReward()
     {
+        AsyncOperation async = SceneManager.LoadSceneAsync(3);//this line
         Destroy(gameObject);  
     }
         

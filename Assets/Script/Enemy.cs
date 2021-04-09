@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
     public void AttackState()
     {
         distance = Vector3.Distance(transform.position, target.transform.position);
-
+        
         if (nav.enabled)
         {
             nav.SetDestination(target.position);
@@ -86,7 +86,19 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //FreezeVelocity();        
+        //FreezeVelocity();   
+       if (Mathf.Abs(transform.position.sqrMagnitude - target.transform.position.sqrMagnitude) <500)
+        {
+            
+            AttackState();
+            
+        }
+   
+       
+    }
+    void PartrolState()
+    {
+
     }
     // When the player is in an attack range the enemy starts punching
     void OnTarget()
@@ -98,7 +110,7 @@ public class Enemy : MonoBehaviour
             case EnemyType.Burrow:
                 targetRadius = 1.5f;
                 targetRange = 0.5f;
-                ; break;
+                break;
             case EnemyType.Log:
                 targetRadius = 1.0f;
                 targetRange = 3.0f;
@@ -191,7 +203,7 @@ public class Enemy : MonoBehaviour
         if (collision.collider.tag == "Weapon"|| collision.collider.tag == "Spell")  // || collision.collider.tag == "Player"
         {
             
-            //currentHp -= damage;
+            currentHp -= damage;
             //Debug.Log(currentHp);
             StartCoroutine(OnDamageEffect());
             isDamage = true;

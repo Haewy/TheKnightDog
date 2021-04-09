@@ -700,10 +700,7 @@ GameObject:
   - component: {fileID: 2076862325}
   - component: {fileID: 2076862331}
   - component: {fileID: 2076862324}
-  - component: {fileID: 2076862326}
-  - component: {fileID: 2076862329}
   - component: {fileID: 2076862332}
-  - component: {fileID: 684637594}
   m_Layer: 0
   m_Name: BossEnmey
   m_TagString: Boss
@@ -719,7 +716,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5734867598913280015}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.3544827, y: -0.00000047683716, z: 3.022873}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 5734867598912783401}
@@ -801,46 +798,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 7
   m_ObstacleAvoidanceType: 4
---- !u!114 &2076862326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5734867598913280015}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ce0b4602ebd9314faaa56088b3f5ce6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  enemy: {fileID: 5734867598913280015}
-  enemyAgent: {fileID: 2076862324}
-  anim: {fileID: 207807272881183613}
-  attackRange: {fileID: 2076862331}
-  range: 4.5
-  playerState: {fileID: 0}
---- !u!114 &2076862329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5734867598913280015}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71f8f94822f335249ae85b2f6f05d7bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolpoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  currentPoint: 0
-  enemy: {fileID: 5734867598913280015}
-  enemyAgent: {fileID: 2076862324}
-  anim: {fileID: 207807272881183613}
 --- !u!114 &2076862332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,27 +811,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
+  isDead: 0
   weapon: {fileID: 0}
   damageColider: {fileID: 0}
   player: {fileID: 0}
   enemy: {fileID: 5734867598913280015}
---- !u!114 &684637594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5734867598913280015}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f38b7314632c245936ea7ce6e00b6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  enemy: {fileID: 5734867598913280015}
-  enemyAgent: {fileID: 2076862324}
-  anim: {fileID: 207807272881183613}
-  playerState: {fileID: 0}
+  chest: {fileID: 0}
+  bossDeadPos: {fileID: 0}
 --- !u!1 &5734867598913280017
 GameObject:
   m_ObjectHideFlags: 0

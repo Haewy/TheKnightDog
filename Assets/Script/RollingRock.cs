@@ -5,32 +5,32 @@ using UnityEngine;
 public class RollingRock : MonoBehaviour
 {
     public CharacterStats playerState;
-    private float speed = 3f;
+    RockController rockController;
+    private float speed = 20f;
 
-    Rigidbody rig;
+    Rigidbody rigL;
 
     public void Awake()
     {
-        rig = GetComponent<Rigidbody>();
+        rigL = GetComponent<Rigidbody>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
-        rig.velocity = Vector3.right * speed;
+        rigL.velocity = Vector3.left * speed;
     }
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Player")
         {
-            //Debug.Log("Collision with a player");
+            Debug.Log("Collision with a player");
             Destroy(gameObject,0.5f);
-            //layerState.GetDamage(10);
+            playerState.GetDamage(10f);
         }
         else
         {
-            Destroy(gameObject, 10f);
+            Destroy(gameObject, 8f);
         }
 
     }
