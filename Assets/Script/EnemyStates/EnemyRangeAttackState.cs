@@ -52,12 +52,13 @@ public class EnemyRangeAttackState : EnemyBaseState
             Debug.Log("Patorl");
         }
 
-        if (Mathf.Abs(npc.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 600)
+        if ((Mathf.Abs(npc.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 1000)&& 
+            (Mathf.Abs(npc.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) >= 100))
         {
             enemycontroller.TransitionToNextState(enemycontroller.enemyFollowState);
             Debug.Log("Chase");
         }
-        if (Mathf.Abs(npc.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 200)
+        if (Mathf.Abs(npc.transform.position.sqrMagnitude - player.transform.position.sqrMagnitude) <= 100)
         {
             enemycontroller.TransitionToNextState(enemycontroller.enemyAttackState);
             Debug.Log("Attack");

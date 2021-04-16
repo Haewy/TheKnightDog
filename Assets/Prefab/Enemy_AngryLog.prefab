@@ -463,13 +463,14 @@ MonoBehaviour:
   enemyType: 1
   maxHp: 50
   currentHp: 0
-  damage: 10
+  damage: 20
   xp: 70
   target: {fileID: 0}
   attackRange: {fileID: 297591044785711078}
   fireBall: {fileID: 0}
   fireBallPos: {fileID: 0}
   playerState: {fileID: 0}
+  locomotion: {fileID: 0}
   reward: {fileID: 0}
   enemyDeadPos: {fileID: 8131841752335201222}
 --- !u!195 &297591045746004907

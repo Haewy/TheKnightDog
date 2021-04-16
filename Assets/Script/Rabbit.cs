@@ -15,6 +15,9 @@ public class Rabbit : MonoBehaviour
     public GameObject pressButton;
     public GameObject missionBlock;
 
+    //Added by Haewon
+    public GameObject textFromBunny;
+
     //BUNNY
     //for having bunny as a partner
     public Rigidbody bunnyRigid;
@@ -25,6 +28,22 @@ public class Rabbit : MonoBehaviour
     public float distance;
     public bool bunnyPartner;
     public bool bunnyTalk;
+    public bool talk;
+
+
+
+    // ---------added by Rui-----------------
+    // Added 3 text box for show the mission 
+
+    [SerializeField] private List<GameObject> missions;
+    [SerializeField] public GameObject camp1;
+    [SerializeField] public GameObject camp2;
+   
+    public bool camp1Empty;
+    public bool camp2Empty;
+
+    //---------------------------------------
+
 
     // Start is called before the first frame update
     //BUNNY
@@ -51,10 +70,10 @@ public class Rabbit : MonoBehaviour
         {
             pressButton.SetActive(true);
         }//BUNNY
-        if (onConversation && !bunnyTalk && (Input.GetKeyDown(KeyCode.E) || Mouse.current.middleButton.isPressed))
+        if (onConversation && !bunnyTalk && talk) //(Input.GetKeyDown(KeyCode.E) || Mouse.current.middleButton.isPressed)
         {
-            pressButton.SetActive(false);
-            missionBlock.SetActive(true);
+            //pressButton.SetActive(false);
+            //missionBlock.SetActive(true);
             textBlock.SetActive(true);
             //BUNNY
             bunnyTalk = true;
@@ -65,13 +84,16 @@ public class Rabbit : MonoBehaviour
         }
         else if (!onConversation)
         {
-            pressButton.SetActive(false);
+            //pressButton.SetActive(false);
             textBlock.SetActive(false);
         }
     }
     //BUNNY
     private void FixedUpdate()
     {
+
+        Missiondisplay();
+
         distance = Vector3.Distance(this.transform.position, playerDog.position);
         if (bunnyPartner)
         {
@@ -91,6 +113,7 @@ public class Rabbit : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             onConversation = true;
+
             Debug.Log("WTF");
         }
     }
@@ -104,6 +127,37 @@ public class Rabbit : MonoBehaviour
         }
     }
 
+    public void OnInventory(InputAction.CallbackContext context)
+    {
+            talk = context.ReadValueAsButton();
+    }
 
 
+    //----------Add by Rui --------------
+    // the function is to show the current mission 
+
+    private void Missiondisplay()
+    {
+
+        if (camp1Empty == false)
+        {
+            missions[0].SetActive(true);
+            missions[1].SetActive(false);
+            missions[2].SetActive(false);
+
+        }
+        else
+        {
+            
+            missions[0].SetActive(false);
+            missions[1].SetActive(true);
+            missions[2].SetActive(false);
+        }
+        if (camp2Empty == true)
+        {
+            missions[1].SetActive(false);
+            missions[2].SetActive(true);
+        }
+    }
+    //--------------End --------------------
 }

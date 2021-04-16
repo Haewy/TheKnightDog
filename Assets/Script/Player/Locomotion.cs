@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Locomotion : MonoBehaviour
 {
     [Header("Character Movement Settings")]
-    [Range(100.0f, 250.0f)] [SerializeField] float speed = 200.0f;
+    [Range(100.0f, 500.0f)] [SerializeField] float speed = 500.0f;
 
 
 
@@ -157,7 +157,7 @@ public class Locomotion : MonoBehaviour
         }
         else
         {
-            speed = 200.0f;
+            speed = 700.0f;
         }
     }
     // Player Attack Trigger 

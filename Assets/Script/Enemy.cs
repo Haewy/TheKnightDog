@@ -11,13 +11,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyType enemyType;
     [SerializeField] public int maxHp;
     [SerializeField] public int currentHp;
-    [SerializeField] public int damage = 10;
+    [SerializeField] public int damage = 50;
     [SerializeField] private int xp; // When the player kills an enemy the player gets xp // Burrow: 20, Log: 40, Boss: 100
     [SerializeField] public Transform target;
     [SerializeField] private BoxCollider attackRange; // Work for the enemy keeps repeating attack and stop in a
     [SerializeField] private GameObject fireBall;
     [SerializeField] private Transform fireBallPos;
     public CharacterStats playerState;
+    public Locomotion locomotion;
     public GameObject reward;
     public Transform enemyDeadPos; // For a position where will place a reward 
     private float speedForColor = 1f;
@@ -33,8 +34,9 @@ public class Enemy : MonoBehaviour
     Rigidbody rigid;
     NavMeshAgent nav;
     Animator anim;
-    Renderer rend; // From Rui's code
+    Renderer rend; 
 
+    // From Rui's code
     Color startColor = Color.white;
     Color endColor = Color.red; // to change color of enemy when it gets damage
 
@@ -86,15 +88,12 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        //OnChase();
         //FreezeVelocity();   
-       if (Mathf.Abs(transform.position.sqrMagnitude - target.transform.position.sqrMagnitude) <500)
-        {
-            
-            AttackState();
-            
+       if (Mathf.Abs(transform.position.sqrMagnitude - target.transform.position.sqrMagnitude) <850)
+        {           
+            AttackState();   
         }
-   
-       
     }
     void PartrolState()
     {
@@ -140,7 +139,7 @@ public class Enemy : MonoBehaviour
         {
             case EnemyType.Burrow:
                 anim.SetBool("attack", true);
-                playerState.GetDamage(10);
+                playerState.GetDamage(5);
                 yield return new WaitForSeconds(0.3f);
                 attackRange.enabled = true;
                 yield return new WaitForSeconds(0.3f);
@@ -151,7 +150,7 @@ public class Enemy : MonoBehaviour
 
             case EnemyType.Log:
                 anim.SetBool("attack", true);
-                //playerState.GetDamage(10);
+                playerState.GetDamage(5);
                 yield return new WaitForSeconds(0.3f);
                 attackRange.enabled = true;
                 yield return new WaitForSeconds(0.3f);
@@ -161,8 +160,7 @@ public class Enemy : MonoBehaviour
 
                 break;
             case EnemyType.Mushroom:
-                anim.SetBool("attack", true);
-                //playerState.GetDamage(10);
+                anim.SetBool("attack", true);;
                 yield return new WaitForSeconds(0.3f);
                 GameObject instanceFireBall = Instantiate(fireBall, fireBallPos.position, fireBallPos.rotation);
                 instanceFireBall.GetComponent<Rigidbody>().AddForce(fireBallPos.forward * 20f, ForceMode.Impulse);
@@ -186,10 +184,11 @@ public class Enemy : MonoBehaviour
 
     IEnumerator OnDamageEffect()
     {
-        currentHp -= damage;
+        //currentHp -= damage;
         Debug.Log(currentHp);
-        if (isDamage)
+        if (isDamage) // && locomotion.isAttack==true 
         {
+            currentHp -= damage;
             float lerp = Mathf.PingPong(Time.time, speedForColor) / speedForColor;
             rend.material.color = Color.Lerp(startColor, endColor, lerp);
         }
@@ -202,9 +201,7 @@ public class Enemy : MonoBehaviour
 
         if (collision.collider.tag == "Weapon"|| collision.collider.tag == "Spell")  // || collision.collider.tag == "Player"
         {
-            
-            currentHp -= damage;
-            //Debug.Log(currentHp);
+
             StartCoroutine(OnDamageEffect());
             isDamage = true;
 
@@ -227,11 +224,6 @@ public class Enemy : MonoBehaviour
                         Destroy(gameObject, 0.5f); // How can a reward make to appear after Destory
                         isDead = true;
 
-
-                        //GameObject rewardInstance = Instantiate(reward, enemyDeadPos.transform.position, Quaternion.identity);
-                        
-                        // Why many clones ????
-                        // Why isn't the position of reward the place where an enemy died ??
                         break;
                     case EnemyType.Log:
                         anim.SetBool("walk", false);
@@ -255,8 +247,7 @@ public class Enemy : MonoBehaviour
                 {
                     GameObject rewardInstance = Instantiate(reward, enemyDeadPos.transform.position, Quaternion.identity);
                 }
-                //Invoke("OnReward",1.0f);
-                //GameObject rewardInstance = Instantiate(reward, enemyDeadPos.transform.position, Quaternion.identity); 
+
                 playerState.curentXp += xp;             
                 
             }

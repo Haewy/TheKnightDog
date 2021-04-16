@@ -26,7 +26,7 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
     private bool isLvlUp = false;
     private bool isLvlMax = false;
 
-    //Player State
+    //Player State //-including for show State. Chris-
     [SerializeField] public Button characterState;
     public bool isDead { get; private set; }
     public bool isDamage { get; set; }
@@ -45,28 +45,22 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
     }
 
     // Update is called once per frame
-    void Update()
+    void Update()//-comment on the DamageTake() and introduce GetDamage(float). Chris-
     {
         // Test Method for Player take damage and death animation  
-        //DamageTake(curentHp,isDamage);
-        
+        //DamageTake(curentHp,isDamage);        
         //ManaTake();
-
         //Check Player Level up 
         CheckXP();
         CheckLvl();
         Death(curentHp,isDead);
-
-
-
     }
-    public void GetDamage(float damage)
+    public void GetDamage(float damage)//-including for hit. Chris-
     {
         curentHp -= damage;
     }
     public void DamageTake(float hp, bool hit)
     {
-
         if (Input.GetKeyDown("1"))
         {
             hp -= 20.0f;
@@ -74,19 +68,14 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
         }
         curentHp = hp;
         isDamage = hit;
-
-
     }
-    public void ManaTake()
+    public void ManaTake()//-modification for consume mana after using power. Chris-
     {
-
         //if (Input.GetKeyDown("2"))
         //{
             curentmp -= 20;
 
         //}
-
-
     }
 
     public void Death(float hp, bool death)
@@ -109,7 +98,7 @@ public class CharacterStats : MonoBehaviour, ICtritterBehavior<float>
             death = true;
 
             //Destroy(inputManager);
-            AsyncOperation async = SceneManager.LoadSceneAsync(4);//this line
+            AsyncOperation async = SceneManager.LoadSceneAsync(4);//-including GameOver Scene. Chris-
         }
         isDead = death;
         

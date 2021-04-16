@@ -16,6 +16,7 @@ public class Potion : MonoBehaviour
         //potionAudioGet.transform.DetachChildren();//parent = null;   
         Transform potionShader = this.transform.Find("Potion_Generic");
         potionShader.GetComponent<MeshRenderer>().enabled = false;
+        this.GetComponent<BoxCollider>().enabled = false;
         //Destroy(potionShader);
         //potionAudioGet.Play();
     }
@@ -47,6 +48,7 @@ public class Potion : MonoBehaviour
             //recover Hp
             //player.curentHp += potionHP; //
             //gObject.SetActive(false);
+            CollectPotion();
             this.transform.SetParent(other.transform);
             inventory.ActivateSlot2();
             this.transform.GetComponent<Collider>().enabled = false;

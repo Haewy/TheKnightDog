@@ -423,8 +423,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3224540781495404204}
-  m_LocalRotation: {x: -0.028974341, y: -0.01664363, z: 0.015904041, w: 0.999315}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.022892779, y: -0.004126072, z: -0.08252268}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2787423332707876895}
@@ -437,7 +437,7 @@ Transform:
   - {fileID: 6245735277739285191}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -3.289, y: -1.962, z: 1.88}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8389789222932388293
 Animator:
   serializedVersion: 3
@@ -509,6 +509,7 @@ MonoBehaviour:
   fireBall: {fileID: 0}
   fireBallPos: {fileID: 0}
   playerState: {fileID: 0}
+  locomotion: {fileID: 0}
   reward: {fileID: 0}
   enemyDeadPos: {fileID: 1937822282384520383}
 --- !u!195 &7935303642716542162
@@ -700,13 +701,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4224772507474399057}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.5010313, y: -0.4989667, z: -0.49896654, w: 0.5010313}
+  m_LocalPosition: {x: -0.047294553, y: -0.000000012340024, z: -0.04709716}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1937822282384520383}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -89.763}
 --- !u!137 &4596410923141223566
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

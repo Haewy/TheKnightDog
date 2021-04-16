@@ -90,10 +90,10 @@ public class EnemyPatrolState : EnemyBaseState
             enemycontroller.TransitionToNextState(enemycontroller.enemyRangeAttackState);
             Debug.Log("RangeAttack");
         }
-        if (sleepTimer <= 1f )
-        {
-            Vector3 destination = enemycontroller.patrolpoints[sleepSpot].position;
-            enemycontroller.TransitionToNextState(enemycontroller.enemySleepState);
-        }
+        //if (sleepTimer <= 1f )
+        //{
+        //    Vector3 destination = enemycontroller.patrolpoints[sleepSpot].position;
+        //    enemycontroller.TransitionToNextState(enemycontroller.enemySleepState);
+        //}
     }
 }

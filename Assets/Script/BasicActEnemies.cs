@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class BasicActEnemies : MonoBehaviour
 {
-    [SerializeField] public Transform myRight;
-    [SerializeField] public Transform myLeft;
+    //[SerializeField] public Transform myRight;
+    //[SerializeField] public Transform myLeft;
     [SerializeField] public GameObject enemyRight;
     [SerializeField] public GameObject enemyLeft;
     [SerializeField] public GameObject aWarming;
@@ -15,7 +15,6 @@ public class BasicActEnemies : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Invoke("GetTheAnimator", 0.1f);
         enemyLeft.GetComponent<NavMeshAgent>().enabled = false;
         enemyRight.GetComponent<NavMeshAgent>().enabled = false;
         aWarming.SetActive(false);
@@ -31,20 +30,15 @@ public class BasicActEnemies : MonoBehaviour
             aWarming.SetActive(true);
             enemyLeft.SetActive(true);
             enemyRight.SetActive(true);
-            enemyLeft.transform.position = myLeft.position;
-            enemyRight.transform.position = myRight.position;
+            //enemyLeft.transform.position = myLeft.position;
+            //enemyRight.transform.position = myRight.position;
             enemyLeft.GetComponent<NavMeshAgent>().enabled = true;
             enemyRight.GetComponent<NavMeshAgent>().enabled = true;
             firstTime = false;
             Invoke("MakeDissappearWarming", 2f);
-            Invoke("TurnTRUEFirstTimeAgain", 80f);
+            //Invoke("TurnTRUEFirstTimeAgain", 80f);
         }
     }
-    public void GetTheAnimator()
-    {
-        //
-    }
-
     public void MakeDissappearWarming()
     {
         aWarming.SetActive(false);

@@ -257,11 +257,33 @@
                 },
                 {
                     "name": "",
+                    "id": "5ac6c42a-933b-45eb-987d-9523a375b8b6",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Joystick",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dbee0eef-76a2-4dd5-9e51-b3f0b6b2ff6a",
                     "path": "<Mouse>/leftButton",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77752257-a6eb-4e31-b0cf-f1a821e10fdb",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Joystick",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -290,6 +312,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9d69ab08-4331-44b9-8ebb-e686da0ef22b",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Joystick",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "72a08e9a-ff9f-429a-8554-b92b94dd2e51",
                     "path": "<Mouse>/middleButton",
                     "interactions": "",
@@ -312,6 +345,17 @@
                 },
                 {
                     "name": "",
+                    "id": "334e2f42-853a-4fe3-b0e5-4a95d8f41365",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e2269030-8012-4f43-a15d-61c933018161",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -323,11 +367,33 @@
                 },
                 {
                     "name": "",
+                    "id": "e1bd4f53-02e3-4f3b-8639-64ad58e7ba0e",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Joystick",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "554c4ca7-c048-4ea9-9a23-b2f324a97562",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "Spell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98bf69d2-d1b3-4fb0-ba7b-e9a8df6d82fb",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Joystick",
                     "action": "Spell",
                     "isComposite": false,
                     "isPartOfComposite": false

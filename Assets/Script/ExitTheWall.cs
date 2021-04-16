@@ -5,19 +5,11 @@ using UnityEngine;
 public class ExitTheWall : MonoBehaviour
 {
     public RockController rockController;
-    public enum ExitWallNumber { ExitFirst, ExitSecond, ExitThird };
-    public ExitWallNumber exitwallNum;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public PointerArrow arrow;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public enum ExitWallNumber { ExitFirst, ExitSecond, ExitThird, ExitFourth, ExitFifth };
+    public ExitWallNumber exitwallNum;
+
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Player" || collision.collider.tag == "Weapon")
@@ -31,11 +23,16 @@ public class ExitTheWall : MonoBehaviour
                     break;
                 case ExitWallNumber.ExitThird:
                     break;
+                case ExitWallNumber.ExitFourth:
+                    break;
+                case ExitWallNumber.ExitFifth:
+                    break;
                 default:
                     break;
             }
             rockController.ExitTheWall(exitwallNum);
-            
+            // To know when the player pass the second exit wall 
+            arrow.TurnOnArrow(exitwallNum);
             
         }
     }

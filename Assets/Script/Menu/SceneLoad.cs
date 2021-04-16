@@ -20,8 +20,9 @@ public class SceneLoad : MonoBehaviour
         async = SceneManager.LoadSceneAsync(i);
         async.allowSceneActivation = true;
     }
-    public void BtnStart( string s)
+    public void BtnStart( string s)//-include strings too. Chris-
     {
+
         async = SceneManager.LoadSceneAsync(s);
         async.allowSceneActivation = true;
     }

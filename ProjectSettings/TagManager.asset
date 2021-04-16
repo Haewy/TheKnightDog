@@ -13,6 +13,7 @@ TagManager:
   - Ground
   - Menu
   - Mana
+  - Spell
   layers:
   - Default
   - TransparentFX

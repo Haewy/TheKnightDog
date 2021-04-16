@@ -13,6 +13,7 @@ public class RockController : MonoBehaviour
 
     InvisibleWall wall;
     ExitTheWall exitTheWall;
+    PointerArrow arrow;
 
     public Image warning;
     public Text warningTxt;

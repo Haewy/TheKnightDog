@@ -32,15 +32,13 @@ public class FireBallForce : MonoBehaviour
     {
         if (collision.gameObject.tag != "Player")
         {
-            if (collision.gameObject.tag == "Boss")
-            {
-                onDamage = true;
-                bossHP.hp -= 10;
-            }
+
+
             Destroy(gameObject);
 
         }
 
     }
+
 
 }

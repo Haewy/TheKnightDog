@@ -18,7 +18,7 @@ public class FSMStateController : MonoBehaviour
     public readonly EnemyAttackState enemyAttackState = new EnemyAttackState();
     public readonly EnemyFollowState enemyFollowState = new EnemyFollowState();
     public readonly EnemyRangeAttackState enemyRangeAttackState = new EnemyRangeAttackState();
-    public readonly EnemySleepState enemySleepState = new EnemySleepState();
+    //public readonly EnemySleepState enemySleepState = new EnemySleepState();
 
     public void Start()
     {

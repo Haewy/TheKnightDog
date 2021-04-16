@@ -27,6 +27,7 @@ public class Inventory : MonoBehaviour
     public int diamondCount;
     public Text diamondCounter;
     public GameObject diamondI;
+
     //Singleton
     private void Awake()
     {
@@ -197,5 +198,6 @@ public class Inventory : MonoBehaviour
         //add one more diamond
         diamondCount++;
         diamondCounter.text = " " + diamondCount.ToString("D2");
+
     }
 }

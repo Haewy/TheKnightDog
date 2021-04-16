@@ -13,6 +13,7 @@ public class Mana : MonoBehaviour
         Transform ballShader = this.transform.Find("Sphere");
         potionShader.GetComponent<MeshRenderer>().enabled = false;
         ballShader.GetComponent<MeshRenderer>().enabled = false;
+        this.GetComponent<BoxCollider>().enabled = false;
     }
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,7 @@ public class Mana : MonoBehaviour
             player = other.GetComponent<CharacterStats>();
             Inventory inventory = other.GetComponent<Inventory>();
 
+            CollectMana();
             this.transform.SetParent(other.transform);
             inventory.ActivateSlot3();
             this.transform.GetComponent<Collider>().enabled = false;

@@ -24,6 +24,8 @@ public class EnemyStatus : MonoBehaviour
     // For reward Chest 
     [SerializeField] GameObject chest;
     [SerializeField] Transform bossDeadPos;
+    // For inactivating Pointer Arrow
+    [SerializeField] public PointerArrow arrow;
 
     private void Awake()
     {
@@ -57,6 +59,8 @@ public class EnemyStatus : MonoBehaviour
 
             //Added by Haewon
             GameObject rewardInstance = Instantiate(chest, bossDeadPos.transform.position, Quaternion.LookRotation(bossDeadPos.forward));
+            arrow.GetBossStatus(isDead);
+
 
 
         }
@@ -94,5 +98,11 @@ public class EnemyStatus : MonoBehaviour
         }
      
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Spell")
+        {
+            hp -= 20;
+        }
+    }
 }

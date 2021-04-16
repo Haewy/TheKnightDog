@@ -37,7 +37,7 @@ public class ActivateEnemies : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
+        //aWarming.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,17 +50,17 @@ public class ActivateEnemies : MonoBehaviour
             {
                 Instantiate(anEnemy, aPlace.position, aPlace.rotation);
                 Debug.Log("el");
-                anEnemy.GetComponent<Enemy>().enabled = true;
+
                 //anEnemy.GetComponent<Enemy>().enemyType = Burrow;
                 anEnemy.GetComponent<Enemy>().target = aPlayer;
                 anEnemy.GetComponent<Enemy>().playerState = other.GetComponent<CharacterStats>();
                 anEnemy.GetComponent<Enemy>().reward = rewardDiamond;
+                anEnemy.GetComponent<Enemy>().enabled = true;
+                //PatrolState patrol = anEnemy.GetComponent<PatrolState>();
                 
-                PatrolState patrol = anEnemy.GetComponent<PatrolState>();
-                
-                patrol.enabled = true;
-                patrol.patrolpoints[0] = aPlace;
-                patrol.patrolpoints[1] = aPlayer;
+                //patrol.enabled = true;
+                //patrol.patrolpoints[0] = aPlace;
+                //patrol.patrolpoints[1] = aPlayer;
             }
             EnemyPhase = true;
             Invoke("ActivateCounter", 2);

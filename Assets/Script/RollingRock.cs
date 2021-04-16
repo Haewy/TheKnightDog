@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class RollingRock : MonoBehaviour
 {
-    public CharacterStats playerState;
+    public CharacterStats player;
     RockController rockController;
     private float speed = 20f;
+    private int damage = 5;
 
     Rigidbody rigL;
 
@@ -25,12 +26,13 @@ public class RollingRock : MonoBehaviour
         if (collision.collider.tag == "Player")
         {
             Debug.Log("Collision with a player");
-            Destroy(gameObject,0.5f);
-            playerState.GetDamage(10f);
+            Destroy(gameObject, 0.5f);
+            player = collision.collider.GetComponent<CharacterStats>();
+            player.curentHp -= damage;
         }
         else
         {
-            Destroy(gameObject, 8f);
+            Destroy(gameObject, 7f);
         }
 
     }

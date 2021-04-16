@@ -8,11 +8,17 @@ public class ButtonManager : MonoBehaviour
 {
 
 
-    public void Quit()
+    public void Quit()//-including quit for Unity. Chris-
     {
-
+        Debug.Log("Quit!!!!!!!!");
+        
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;//exit the playmode in the editor
+#else
+        Application.Quit();
+#endif
         Application.Quit();
 
-        Debug.Log("Quit!!!!!!!!");
+
     }
 }

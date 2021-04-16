@@ -474,13 +474,14 @@ MonoBehaviour:
   enemyType: 2
   maxHp: 80
   currentHp: 0
-  damage: 10
+  damage: 30
   xp: 0
   target: {fileID: 0}
   attackRange: {fileID: 0}
   fireBall: {fileID: 3412944797209476949, guid: 3ff4f26f85601a640907a8c51c95451f, type: 3}
   fireBallPos: {fileID: 2067944184871291892}
   playerState: {fileID: 0}
+  locomotion: {fileID: 0}
   reward: {fileID: 0}
   enemyDeadPos: {fileID: 0}
 --- !u!95 &2293042552381500085

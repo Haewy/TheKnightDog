@@ -20,12 +20,12 @@ public class RewardCup : MonoBehaviour
         {
             rewardAudio.Play();
             Invoke("OnReward", 0.2f);
-            collision.collider.GetComponent<Inventory>().AddDiamond();
         }     
     }
     public void OnReward()
     {
-        AsyncOperation async = SceneManager.LoadSceneAsync(3);//this line
+        PlayerPrefs.Save();
+        AsyncOperation async = SceneManager.LoadSceneAsync(3);//this line ends the game
         Destroy(gameObject);  
     }
         

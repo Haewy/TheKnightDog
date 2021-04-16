@@ -5,7 +5,6 @@ using UnityEngine;
 public class Chest : MonoBehaviour
 {
     [SerializeField] private GameObject rewardCup;
-    //[SerializeField] private Transform chestPos;
 
     private bool chestIsOpen;
 
@@ -28,24 +27,19 @@ public class Chest : MonoBehaviour
 
         if (collision.collider.tag == "Player" || collision.collider.tag == "Weapon")
         {
-            Debug.Log("Collided with Player!!!!!");
+            Debug.Log("Chest Collided with Player!!!!!");
             chestIsOpen = true;           
             anim.SetBool("isOpen", true);
             //OnTada();
-            Invoke("OnTada", 1f);
+            Invoke("OnTada", 0.5f);
         }
     }
     public void OnTada()
     {
         if (chestIsOpen)
         {
-            rewardCup.SetActive(chestIsOpen);
-            
+            rewardCup.SetActive(chestIsOpen);        
         }
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
